@@ -1,10 +1,11 @@
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import * as productService from '@/services/productService';
+import { Product } from '@/types/product';
 
 export function useProducts() {
-  return useQuery({
+  return useQuery<Product[]>({
     queryKey: ['products'],
-    queryFn: productService.getProducts,
+    queryFn: () => productService.getProducts(),
   });
 }
 

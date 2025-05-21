@@ -2,10 +2,11 @@
 import { getProductById } from "@/features/product/api/productService"
 import ProductForm from "@/features/product/components/ProductForm"
 import { Product } from "@/features/product/types/product"
-import { useParams } from "next/navigation"
+import { useParams, useRouter } from "next/navigation"
 import { useEffect, useState } from "react"
 
 export default function ProductEdit() {
+    const router = useRouter()
     const { id } = useParams()
     const [product, setProduct] = useState<Product | null>(null)
     useEffect(() => {
@@ -19,7 +20,8 @@ export default function ProductEdit() {
             {product && (
                 <ProductForm initialData={product}
                     onSuccess={() => {
-                        console.log("Ürün güncellendi")
+                        console.log("Ürün güncellendi"),
+                            router.push('/admin/products')
                     }}
                 />
             )}

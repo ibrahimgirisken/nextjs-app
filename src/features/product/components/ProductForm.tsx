@@ -1,6 +1,7 @@
 import { Form, Button, Row, Col } from 'react-bootstrap'
 import { Product } from '../types/product'
 import { useEffect, useState } from 'react'
+import { createProduct, updateProduct } from '../api/productService'
 
 type ProductFormProps = {
   initialData?: Product
@@ -10,7 +11,7 @@ type ProductFormProps = {
 export default function ProductForm({ initialData, onSuccess }: ProductFormProps) {
 
   const [formData, setFormData] = useState<Product>({
-    id: '', // edit sayfasıysa dolu olur
+    id: '',
     code: '',
     brandId: null,
     categoryId: '',
@@ -72,10 +73,17 @@ export default function ProductForm({ initialData, onSuccess }: ProductFormProps
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
-    if (formData.id) {
-    } else {
+    try {
+      if (formData.id) {
+        await updateProduct(formData)
+      } else {
+        await createProduct(formData)
+      }
+      if (onSuccess) onSuccess()
+    } catch (error) {
+      console.log(error)
     }
-    if (onSuccess) onSuccess()
+
   }
 
   return (
@@ -101,7 +109,6 @@ export default function ProductForm({ initialData, onSuccess }: ProductFormProps
               name="brandId"
               value={formData.brandId ?? ''}
               onChange={handleChange}
-              required
             />
           </Form.Group>
         </Col>

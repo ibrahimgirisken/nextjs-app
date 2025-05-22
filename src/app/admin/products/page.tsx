@@ -26,41 +26,42 @@ export default function ProductList() {
                     <Button variant="primary">Yeni Ürün Ekle</Button>
                 </Link>
             </div>
-
-            <Table striped bordered hover>
-                <thead>
-                    <tr>
-                        <th>#</th>
-                        <th>Kod</th>
-                        <th>Ad (TR)</th>
-                        <th>Kategori</th>
-                        <th>Durum</th>
-                        <th>İşlemler</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {products.map((product, index) => {
-                        const trLang = product.productTranslations.find(t => t.langCode === 'tr')
-                        return (
-                            <tr key={product.id}>
-                                <td>{index + 1}</td>
-                                <td>{product.code}</td>
-                                <td>{trLang?.name}</td>
-                                <td>{product.categoryId}</td>
-                                <td>{product.status ? 'Aktif' : 'Pasif'}</td>
-                                <td>
-                                    <Link href={`/admin/products/${product.id}/edit`}>
-                                        <Button variant="warning" size="sm" className="me-2">
-                                            Düzenle
-                                        </Button>
-                                    </Link>
-                                    {/* İsteğe bağlı: silme butonu */}
-                                </td>
-                            </tr>
-                        )
-                    })}
-                </tbody>
-            </Table>
+            <div className="table-responsive">
+                <Table striped bordered hover>
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Kod</th>
+                            <th>Ad (TR)</th>
+                            <th>Kategori</th>
+                            <th>Durum</th>
+                            <th>İşlemler</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {products.map((product, index) => {
+                            const trLang = product.productTranslations.find(t => t.langCode === 'tr')
+                            return (
+                                <tr key={product.id}>
+                                    <td>{index + 1}</td>
+                                    <td>{product.code}</td>
+                                    <td>{trLang?.name}</td>
+                                    <td>{product.categoryId}</td>
+                                    <td>{product.status ? 'Aktif' : 'Pasif'}</td>
+                                    <td>
+                                        <Link href={`/admin/products/${product.id}/edit`}>
+                                            <Button variant="warning" size="sm" className="me-2">
+                                                Düzenle
+                                            </Button>
+                                        </Link>
+                                        {/* İsteğe bağlı: silme butonu */}
+                                    </td>
+                                </tr>
+                            )
+                        })}
+                    </tbody>
+                </Table>
+            </div>
         </div>
     )
 }

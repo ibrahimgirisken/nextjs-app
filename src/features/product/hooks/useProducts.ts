@@ -20,7 +20,7 @@ export function useCreateProduct() {
 export function useUpdateProduct() {
   const queryClient = useQueryClient();
   return useMutation({
-    mutationFn: ({ id, data }: { id: string; data: any }) => productService.updateProduct(id, data),
+    mutationFn: ({ data }: { data: Product }) => productService.updateProduct(data),
     onSuccess: () => queryClient.invalidateQueries({ queryKey: ['products'] }),
   });
 }

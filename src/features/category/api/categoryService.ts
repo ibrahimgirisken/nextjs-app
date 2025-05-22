@@ -6,7 +6,7 @@ export const getCategories = (): Promise<Category[]> =>
 export const getCategoryById = (id: string) =>
   api.get(`/categories/by-id?id=${id}&IncludeAllLanguages=true`).then((res) => res.data);
 export const createCategory = (data: Omit<Category, 'id'>) =>
-  api.post('/categories', data).then((res) => res.data);
+  api.post('/categories/add', data).then((res) => res.data);
 export const updateCategory = (category: Category) =>
   api.put(`/categories/update`, category).then((res) => res.data);
 export const deleteCategory = (id: string) =>

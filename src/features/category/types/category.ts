@@ -10,8 +10,8 @@ export interface CategoryTranslation {
 export interface Category {
   id: string;
   image1: string;
-  parentId: string;
-  children: [];
+  parentId: string | null;
+  children: string[];
   status: boolean;
   order: number;
   categoryTranslations: CategoryTranslation[];

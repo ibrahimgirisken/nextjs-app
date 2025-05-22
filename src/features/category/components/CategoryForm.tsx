@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { Button, Col, Form, Row } from 'react-bootstrap'
+import { Button, Col, Form, Row, Tab, Tabs } from 'react-bootstrap'
 import { Category } from '../types/category'
 import { createCategory, updateCategory } from '../api/categoryService'
 
@@ -13,7 +13,7 @@ export default function CategoryForm({ initialData, onSuccess }: CategoryFormPro
     const [formData, setFormData] = useState<Category>({
         id: '',
         image1: '',
-        parentId: '',
+        parentId: null,
         order: 1,
         children: [],
         status: true,
@@ -58,7 +58,20 @@ export default function CategoryForm({ initialData, onSuccess }: CategoryFormPro
             [name]: type === 'number' ? Number(value) : value,
         }))
     }
+    const handleTranslationChange = (index: number, field: string, value: string) => {
+        setFormData((prev) => {
+            const updatedTranslations = [...prev.categoryTranslations]
+            updatedTranslations[index] = {
+                ...updatedTranslations[index],
+                [field]: value,
+            }
 
+            return {
+                ...prev,
+                categoryTranslations: updatedTranslations,
+            }
+        })
+    }
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault()
         try {
@@ -66,6 +79,9 @@ export default function CategoryForm({ initialData, onSuccess }: CategoryFormPro
                 await updateCategory(formData)
             } else {
                 const { id, ...dataToSend } = formData
+                if (!dataToSend.parentId) {
+                    delete dataToSend.parentId
+                }
                 await createCategory(dataToSend)
             }
             if (onSuccess) onSuccess()
@@ -85,7 +101,6 @@ export default function CategoryForm({ initialData, onSuccess }: CategoryFormPro
                             name="image1"
                             value={formData.image1}
                             onChange={handleChange}
-                            required
                         />
                     </Form.Group>
                 </Col>
@@ -102,6 +117,63 @@ export default function CategoryForm({ initialData, onSuccess }: CategoryFormPro
                 </Col>
             </Row>
 
+            <Tabs defaultActiveKey="tr" className="mb-3">
+                {formData.categoryTranslations.map((translation, index) => (
+                    <Tab key={translation.langCode} eventKey={translation.langCode} title={translation.langCode.toUpperCase()}>
+                        <Form.Group className="mb-3">
+                            <Form.Label>Ad</Form.Label>
+                            <Form.Control
+                                type="text"
+                                name="name"
+                                value={translation.name}
+                                onChange={(e) => handleTranslationChange(index, 'name', e.target.value)}
+                            />
+                        </Form.Group>
+
+                        <Form.Group className="mb-3">
+                            <Form.Label>Başlık</Form.Label>
+                            <Form.Control
+                                type="text"
+                                name="title"
+                                value={translation.title}
+                                onChange={(e) => handleTranslationChange(index, 'title', e.target.value)}
+                            />
+                        </Form.Group>
+
+                        <Form.Group className="mb-3">
+                            <Form.Label>URL</Form.Label>
+                            <Form.Control
+                                type="text"
+                                name="url"
+                                value={translation.url}
+                                onChange={(e) => handleTranslationChange(index, 'url', e.target.value)}
+                            />
+                        </Form.Group>
+
+                        <Form.Group className="mb-3">
+                            <Form.Label>Kısa Açıklama</Form.Label>
+                            <Form.Control
+                                as="textarea"
+                                rows={2}
+                                name="brief"
+                                value={translation.brief}
+                                onChange={(e) => handleTranslationChange(index, 'brief', e.target.value)}
+                            />
+                        </Form.Group>
+
+                        <Form.Group className="mb-3">
+                            <Form.Label>Meta Açıklama</Form.Label>
+                            <Form.Control
+                                as="textarea"
+                                rows={2}
+                                name="metaDescription"
+                                value={translation.metaDescription}
+                                onChange={(e) => handleTranslationChange(index, 'metaDescription', e.target.value)}
+                            />
+                        </Form.Group>
+                    </Tab>
+                ))}
+            </Tabs>
             <Form.Group className="mb-3">
                 <Form.Label>Sıra</Form.Label>
                 <Form.Control
@@ -126,7 +198,6 @@ export default function CategoryForm({ initialData, onSuccess }: CategoryFormPro
                     }
                 />
             </Form.Group>
-
             <Button variant="primary" type="submit">
                 {formData.id ? 'Güncelle' : 'Ekle'}
             </Button>

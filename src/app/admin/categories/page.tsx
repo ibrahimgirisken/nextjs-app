@@ -34,7 +34,7 @@ export default function CategoryList() {
                     <thead>
                         <tr>
                             <th>#</th>
-                            <th>Kod</th>
+                            <th>Görsel</th>
                             <th>Ad (TR)</th>
                             <th>Sıra</th>
                             <th>Durum</th>
@@ -47,8 +47,8 @@ export default function CategoryList() {
                             return (
                                 <tr key={category.id}>
                                     <td>{index + 1}</td>
+                                    <td>{category.image1}</td>
                                     <td>{trLang?.name}</td>
-                                    <td>{category.parentId}</td>
                                     <td>{category.order}</td>
                                     <td>{category.status ? 'Aktif' : 'Pasif'}</td>
                                     <td>

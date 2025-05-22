@@ -1,5 +1,9 @@
-export default function Page() {
+import React from 'react'
+
+function UXCategoriesPage() {
     return (
-        <div>page</div>
+        <div>UXCategoriesPage</div>
     )
 }
+
+export default UXCategoriesPage

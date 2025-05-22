@@ -54,7 +54,6 @@ export default function ProductList() {
                                                 Düzenle
                                             </Button>
                                         </Link>
-                                        {/* İsteğe bağlı: silme butonu */}
                                     </td>
                                 </tr>
                             )

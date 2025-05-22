@@ -1,6 +1,6 @@
+import { useEffect, useState } from 'react'
 import { Form, Button, Row, Col } from 'react-bootstrap'
 import { Product } from '../types/product'
-import { useEffect, useState } from 'react'
 import { createProduct, updateProduct } from '../api/productService'
 
 type ProductFormProps = {
@@ -77,13 +77,13 @@ export default function ProductForm({ initialData, onSuccess }: ProductFormProps
       if (formData.id) {
         await updateProduct(formData)
       } else {
-        await createProduct(formData)
+        const { id, ...dataToSend } = formData
+        await createProduct(dataToSend)
       }
       if (onSuccess) onSuccess()
     } catch (error) {
       console.log(error)
     }
-
   }
 
   return (

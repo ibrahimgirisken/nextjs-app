@@ -20,7 +20,7 @@ export default function ProductEdit() {
             {product && (
                 <ProductForm initialData={product}
                     onSuccess={() => {
-                        console.log("Ürün güncellendi"),
+                        console.log("Ürün Güncellendi"),
                             router.push('/admin/products')
                     }}
                 />

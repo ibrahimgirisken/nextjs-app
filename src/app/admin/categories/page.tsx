@@ -36,7 +36,7 @@ export default function CategoryList() {
                             <th>#</th>
                             <th>Kod</th>
                             <th>Ad (TR)</th>
-                            <th>Kategori</th>
+                            <th>Sıra</th>
                             <th>Durum</th>
                             <th>İşlemler</th>
                         </tr>
@@ -49,6 +49,7 @@ export default function CategoryList() {
                                     <td>{index + 1}</td>
                                     <td>{trLang?.name}</td>
                                     <td>{category.parentId}</td>
+                                    <td>{category.order}</td>
                                     <td>{category.status ? 'Aktif' : 'Pasif'}</td>
                                     <td>
                                         <Link href={`/admin/categories/${category.id}/edit`}>

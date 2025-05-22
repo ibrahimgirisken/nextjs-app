@@ -33,7 +33,7 @@ export default function ProductList() {
                             <th>#</th>
                             <th>Kod</th>
                             <th>Ad (TR)</th>
-                            <th>Kategori</th>
+                            <th>Sıra</th>
                             <th>Durum</th>
                             <th>İşlemler</th>
                         </tr>
@@ -46,7 +46,7 @@ export default function ProductList() {
                                     <td>{index + 1}</td>
                                     <td>{product.code}</td>
                                     <td>{trLang?.name}</td>
-                                    <td>{product.categoryId}</td>
+                                    <td>{product.order}</td>
                                     <td>{product.status ? 'Aktif' : 'Pasif'}</td>
                                     <td>
                                         <Link href={`/admin/products/${product.id}/edit`}>

@@ -1,5 +1,5 @@
-import * as categoryService from '@/features/category/api/categoryService';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
+import * as categoryService from '@/features/category/api/categoryService';
 import { Category } from '../types/category';
 
 export function useCategories() {

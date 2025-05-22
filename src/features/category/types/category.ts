@@ -11,6 +11,7 @@ export interface Category {
   id: string;
   image1: string;
   parentId: string;
+  children: [];
   status: boolean;
   order: number;
   categoryTranslations: CategoryTranslation[];

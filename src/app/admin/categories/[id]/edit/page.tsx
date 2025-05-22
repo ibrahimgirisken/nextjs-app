@@ -3,7 +3,7 @@ import { getCategoryById } from '@/features/category/api/categoryService'
 import CategoryForm from '@/features/category/components/CategoryForm'
 import { Category } from '@/features/category/types/category'
 import { useParams, useRouter } from 'next/navigation'
-import React, { useEffect, useState } from 'react'
+import { useEffect, useState } from "react"
 
 export default function CategoryEdit() {
     const router = useRouter()

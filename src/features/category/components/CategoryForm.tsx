@@ -1,7 +1,7 @@
-import React, { useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
+import { Button, Col, Form, Row } from 'react-bootstrap'
 import { Category } from '../types/category'
 import { createCategory, updateCategory } from '../api/categoryService'
-import { Button, Col, Form, Row } from 'react-bootstrap'
 
 type CategoryFormProps = {
     initialData?: Category,
@@ -15,6 +15,7 @@ export default function CategoryForm({ initialData, onSuccess }: CategoryFormPro
         image1: '',
         parentId: '',
         order: 1,
+        children: [],
         status: true,
         categoryTranslations: [
             {
@@ -64,9 +65,10 @@ export default function CategoryForm({ initialData, onSuccess }: CategoryFormPro
             if (formData.id) {
                 await updateCategory(formData)
             } else {
-                await createCategory(formData)
+                const { id, ...dataToSend } = formData
+                await createCategory(dataToSend)
             }
-            if (onSuccess) onSuccess
+            if (onSuccess) onSuccess()
         } catch (error) {
             console.log(error)
         }
@@ -77,7 +79,7 @@ export default function CategoryForm({ initialData, onSuccess }: CategoryFormPro
             <Row className="mb-3">
                 <Col>
                     <Form.Group>
-                        <Form.Label>Ürün Kodu</Form.Label>
+                        <Form.Label>Görsel</Form.Label>
                         <Form.Control
                             type="text"
                             name="image1"
@@ -89,7 +91,7 @@ export default function CategoryForm({ initialData, onSuccess }: CategoryFormPro
                 </Col>
                 <Col>
                     <Form.Group>
-                        <Form.Label>Marka</Form.Label>
+                        <Form.Label>Kategori</Form.Label>
                         <Form.Control
                             type="text"
                             name="parentId"

@@ -4,7 +4,6 @@ import { useRouter } from 'next/navigation'
 
 export default function CategoryAdd() {
     const router = useRouter()
-
     return (
         <>
             <h2>Kategori Ekleme Sayfası</h2>

@@ -2,13 +2,17 @@ import { useEffect, useState } from 'react'
 import { Form, Button, Row, Col, Tabs, Tab } from 'react-bootstrap'
 import { Product } from '../types/product'
 import { createProduct, updateProduct } from '../api/productService'
+import { Category } from '@/features/category/types/category'
+import { Brand } from '@/features/brand/types/brand'
 
 type ProductFormProps = {
-  initialData?: Product
+  initialData?: Product,
+  categoryList: Category[],
+  brandList: Brand[],
   onSuccess?: () => void
 }
 
-export default function ProductForm({ initialData, onSuccess }: ProductFormProps) {
+export default function ProductForm({ initialData, categoryList, brandList, onSuccess }: ProductFormProps) {
 
   const [formData, setFormData] = useState<Product>({
     id: '',
@@ -63,7 +67,7 @@ export default function ProductForm({ initialData, onSuccess }: ProductFormProps
     }
   }, [initialData])
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
     const { name, value, type } = e.target
     setFormData((prev) => ({
       ...prev,
@@ -115,26 +119,36 @@ export default function ProductForm({ initialData, onSuccess }: ProductFormProps
             />
           </Form.Group>
         </Col>
-        <Col>
-          <Form.Group>
-            <Form.Label>Marka</Form.Label>
-            <Form.Control
-              type="text"
-              name="brandId"
-              value={formData.brandId ?? ''}
-              onChange={handleChange}
-            />
-          </Form.Group>
-        </Col>
       </Row>
 
       <Form.Group className="mb-3">
+        <Form.Label>Marka</Form.Label>
+        <Form.Select
+          name="brandId"
+          value={formData.brandId ?? ''}
+          onChange={handleChange}>
+          <option value="">Seçiniz</option>
+          {brandList.map((brand) => (
+            <option key={brand.id} value={brand.id}>
+              {brand.name}
+            </option>
+          ))}
+        </Form.Select>
+      </Form.Group>
+
+      <Form.Group className="mb-3">
         <Form.Label>Kategori</Form.Label>
-        <Form.Control
+        <Form.Select
           name="categoryId"
           value={formData.categoryId ?? ''}
-          onChange={handleChange}
-        />
+          onChange={handleChange}>
+          <option value="">Ana Kategori</option>
+          {categoryList.map((category) => (
+            <option key={category.id} value={category.id}>
+              {category.categoryTranslations.find(t => t.langCode === 'tr')?.name}
+            </option>
+          ))}
+        </Form.Select>
       </Form.Group>
 
       <Tabs defaultActiveKey="tr" className="mb-3">
@@ -242,6 +256,6 @@ export default function ProductForm({ initialData, onSuccess }: ProductFormProps
       <Button variant="primary" type="submit">
         {formData.id ? 'Güncelle' : 'Ekle'}
       </Button>
-    </Form>
+    </Form >
   )
 }

@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { Form, Button, Row, Col } from 'react-bootstrap'
+import { Form, Button, Row, Col, Tabs, Tab } from 'react-bootstrap'
 import { Product } from '../types/product'
 import { createProduct, updateProduct } from '../api/productService'
 
@@ -71,6 +71,20 @@ export default function ProductForm({ initialData, onSuccess }: ProductFormProps
     }))
   }
 
+  const handleTranslationChange = (index: number, field: string, value: string) => {
+    setFormData((prev) => {
+      const updatedTranslations = [...prev.productTranslations]
+      updatedTranslations[index] = {
+        ...updatedTranslations[index],
+        [field]: value,
+      }
+      return {
+        ...prev,
+        productTranslations: updatedTranslations,
+      }
+    })
+  }
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     try {
@@ -87,7 +101,7 @@ export default function ProductForm({ initialData, onSuccess }: ProductFormProps
   }
 
   return (
-    <Form onSubmit={handleSubmit}>
+    <Form onSubmit={handleSubmit} className='m-5'>
       <Row className="mb-3">
         <Col>
           <Form.Group>
@@ -122,6 +136,83 @@ export default function ProductForm({ initialData, onSuccess }: ProductFormProps
           onChange={handleChange}
         />
       </Form.Group>
+
+      <Tabs defaultActiveKey="tr" className="mb-3">
+        {formData.productTranslations.map((translation, index) => (
+          <Tab key={translation.langCode} eventKey={translation.langCode} title={translation.langCode.toUpperCase()}>
+            <Form.Group className="mb-3">
+              <Form.Label>Ad</Form.Label>
+              <Form.Control
+                type="text"
+                name="name"
+                value={translation.name}
+                onChange={(e) => handleTranslationChange(index, 'name', e.target.value)}
+              />
+            </Form.Group>
+
+            <Form.Group className="mb-3">
+              <Form.Label>Url</Form.Label>
+              <Form.Control
+                type="text"
+                name="url"
+                value={translation.url}
+                onChange={(e) => handleTranslationChange(index, 'url', e.target.value)}
+              />
+            </Form.Group>
+
+            <Form.Group className="mb-3">
+              <Form.Label>Başlık</Form.Label>
+              <Form.Control
+                type="text"
+                name="title"
+                value={translation.title}
+                onChange={(e) => handleTranslationChange(index, 'title', e.target.value)}
+              />
+            </Form.Group>
+
+            <Form.Group className="mb-3">
+              <Form.Label>Sayfa Başlık</Form.Label>
+              <Form.Control
+                type="text"
+                name="pageTitle"
+                value={translation.pageTitle}
+                onChange={(e) => handleTranslationChange(index, 'pageTitle', e.target.value)}
+              />
+            </Form.Group>
+
+            <Form.Group className="mb-3">
+              <Form.Label>Kısa Açıklama</Form.Label>
+              <Form.Control
+                type="text"
+                name="brief"
+                value={translation.brief}
+                onChange={(e) => handleTranslationChange(index, 'brief', e.target.value)}
+              />
+            </Form.Group>
+
+            <Form.Group className="mb-3">
+              <Form.Label>Meta Açıklama</Form.Label>
+              <Form.Control
+                type="text"
+                name="metaDescription"
+                value={translation.metaDescription}
+                onChange={(e) => handleTranslationChange(index, 'metaDescription', e.target.value)}
+              />
+            </Form.Group>
+
+            <Form.Group className="mb-3">
+              <Form.Label>İçerik</Form.Label>
+              <Form.Control
+                as="textarea"
+                rows={2}
+                name="content"
+                value={translation.metaDescription}
+                onChange={(e) => handleTranslationChange(index, 'content', e.target.value)}
+              />
+            </Form.Group>
+          </Tab>
+        ))}
+      </Tabs>
 
       <Form.Group className="mb-3">
         <Form.Label>Sıra</Form.Label>

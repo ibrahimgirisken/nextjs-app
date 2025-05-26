@@ -16,6 +16,7 @@ export default function ResponsiveSidebar() {
     { href: '/admin/dashboard', label: 'Dashboard' },
     { href: '/admin/products', label: 'Ürünler' },
     { href: '/admin/categories', label: 'Kategoriler' },
+    { href: '/admin/brands', label: 'Markalar' },
     { href: '/admin/settings', label: 'Ayarlar' },
   ]
 

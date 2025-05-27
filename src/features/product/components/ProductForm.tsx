@@ -4,6 +4,8 @@ import { Product } from '../types/product'
 import { createProduct, updateProduct } from '../api/productService'
 import { Category } from '@/features/category/types/category'
 import { Brand } from '@/features/brand/types/brand'
+import ImageUpload from '@/shared/imageUpload'
+import { reviseTheText } from '@/lib/reviseTheText'
 
 type ProductFormProps = {
   initialData?: Product,
@@ -108,6 +110,61 @@ export default function ProductForm({ initialData, categoryList, brandList, onSu
     <Form onSubmit={handleSubmit} className='m-5'>
       <Row className="mb-3">
         <Col>
+          <ImageUpload
+            name="image1"
+            folder="product"
+            value={formData.image1}
+            onChange={(name, val) =>
+              setFormData((prev) => ({
+                ...prev,
+                [name]: val,
+              }))
+            }
+          />
+          <ImageUpload
+            name="image2"
+            folder="product"
+            value={formData.image2}
+            onChange={(name, val) =>
+              setFormData((prev) => ({
+                ...prev,
+                [name]: val,
+              }))
+            }
+          />
+          <ImageUpload
+            name="image3"
+            folder="product"
+            value={formData.image3}
+            onChange={(name, val) =>
+              setFormData((prev) => ({
+                ...prev,
+                [name]: val,
+              }))
+            }
+          />
+          <ImageUpload
+            name="image4"
+            folder="product"
+            value={formData.image4}
+            onChange={(name, val) =>
+              setFormData((prev) => ({
+                ...prev,
+                [name]: val,
+              }))
+            }
+          />
+          <ImageUpload
+            name="image5"
+            folder="product"
+            value={formData.image5}
+            onChange={(name, val) =>
+              setFormData((prev) => ({
+                ...prev,
+                [name]: val,
+              }))
+            }
+          />
           <Form.Group>
             <Form.Label>Ürün Kodu</Form.Label>
             <Form.Control
@@ -169,7 +226,7 @@ export default function ProductForm({ initialData, categoryList, brandList, onSu
               <Form.Control
                 type="text"
                 name="url"
-                value={translation.url}
+                value={reviseTheText(translation.url === '' || null ? translation.name : translation.url)}
                 onChange={(e) => handleTranslationChange(index, 'url', e.target.value)}
               />
             </Form.Group>
@@ -220,7 +277,7 @@ export default function ProductForm({ initialData, categoryList, brandList, onSu
                 as="textarea"
                 rows={2}
                 name="content"
-                value={translation.metaDescription}
+                value={translation.content}
                 onChange={(e) => handleTranslationChange(index, 'content', e.target.value)}
               />
             </Form.Group>

@@ -1,3 +1,4 @@
+'use client'
 import { useEffect, useState } from 'react'
 import { Form, Button, Row, Col, Tabs, Tab } from 'react-bootstrap'
 import { Product } from '../types/product'

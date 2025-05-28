@@ -226,7 +226,7 @@ export default function ProductForm({ initialData, categoryList, brandList, onSu
               <Form.Control
                 type="text"
                 name="url"
-                value={reviseTheText(translation.url === '' || null ? translation.name : translation.url)}
+                value={reviseTheText(!translation.url ? translation.name : translation.url)}
                 onChange={(e) => handleTranslationChange(index, 'url', e.target.value)}
               />
             </Form.Group>

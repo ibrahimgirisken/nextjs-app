@@ -4,7 +4,7 @@ import { Button, Form, Image } from 'react-bootstrap'
 
 type Props = {
     name: string
-    folder: 'product' | 'category' | 'blog' | 'datasheet' | 'page'
+    folder: 'products' | 'categories' | 'blogs' | 'datasheets' | 'pages' | 'settings'
     value?: string
     label?: string
     onChange: (name: string, value: string) => void

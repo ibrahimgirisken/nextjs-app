@@ -117,7 +117,7 @@ export default function ProductForm({ initialData, categoryList, brandList, onSu
         <Col>
           <ImageUpload
             name="image1"
-            folder="product"
+            folder="products"
             value={formData.image1}
             onChange={(name, val) =>
               setFormData((prev) => ({
@@ -128,7 +128,7 @@ export default function ProductForm({ initialData, categoryList, brandList, onSu
           />
           <ImageUpload
             name="image2"
-            folder="product"
+            folder="products"
             value={formData.image2}
             onChange={(name, val) =>
               setFormData((prev) => ({
@@ -139,7 +139,7 @@ export default function ProductForm({ initialData, categoryList, brandList, onSu
           />
           <ImageUpload
             name="image3"
-            folder="product"
+            folder="products"
             value={formData.image3}
             onChange={(name, val) =>
               setFormData((prev) => ({
@@ -150,7 +150,7 @@ export default function ProductForm({ initialData, categoryList, brandList, onSu
           />
           <ImageUpload
             name="image4"
-            folder="product"
+            folder="products"
             value={formData.image4}
             onChange={(name, val) =>
               setFormData((prev) => ({
@@ -161,7 +161,7 @@ export default function ProductForm({ initialData, categoryList, brandList, onSu
           />
           <ImageUpload
             name="image5"
-            folder="product"
+            folder="products"
             value={formData.image5}
             onChange={(name, val) =>
               setFormData((prev) => ({

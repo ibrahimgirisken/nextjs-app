@@ -81,10 +81,15 @@ export default function ProductForm({ initialData, categoryList, brandList, onSu
   const handleTranslationChange = (index: number, field: string, value: string) => {
     setFormData((prev) => {
       const updatedTranslations = [...prev.productTranslations]
+
+
       updatedTranslations[index] = {
         ...updatedTranslations[index],
         [field]: value,
       }
+
+      updatedTranslations[index].url = reviseTheText(updatedTranslations[index].url.trim() === '' ? updatedTranslations[index].name : updatedTranslations[index].url)
+
       return {
         ...prev,
         productTranslations: updatedTranslations,
@@ -227,7 +232,7 @@ export default function ProductForm({ initialData, categoryList, brandList, onSu
               <Form.Control
                 type="text"
                 name="url"
-                value={reviseTheText(!translation.url ? translation.name : translation.url)}
+                value={translation.url}
                 onChange={(e) => handleTranslationChange(index, 'url', e.target.value)}
               />
             </Form.Group>

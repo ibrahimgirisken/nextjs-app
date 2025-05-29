@@ -12,14 +12,12 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ error: 'Eksik dosya veya klasör' }, { status: 400 });
   }
 
-  // Dosya içeriğini al
   const bytes = await file.arrayBuffer();
   const buffer = Buffer.from(bytes);
 
   const cleanedName = reviseTheText(file.name);
   const filename = `${Date.now()}-${cleanedName}`;
 
-  // Klasöre kaydet
   const uploadDir = path.join(process.cwd(), 'public', 'uploads', folder);
   await fs.mkdir(uploadDir, { recursive: true });
 

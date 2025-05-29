@@ -1,7 +1,6 @@
 'use client'
-
-import { useState } from 'react'
-import { Form } from 'react-bootstrap'
+import { useEffect, useState } from 'react'
+import { Button, Form, Image } from 'react-bootstrap'
 
 type Props = {
     name: string
@@ -15,6 +14,12 @@ export default function ImageUpload({ name, folder, value, label = 'Görsel', on
     const [preview, setPreview] = useState(
         value ? `/uploads/${folder}/${value}` : ''
     )
+
+    useEffect(() => {
+        if (value) {
+            setPreview(`/uploads/${folder}/${value}`)
+        }
+    }, [value, folder]);
 
     const handleFileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
         const file = e.target.files?.[0]
@@ -40,14 +45,24 @@ export default function ImageUpload({ name, folder, value, label = 'Görsel', on
         <Form.Group className="mb-3">
             <Form.Label>{label}</Form.Label>
             <Form.Control type="file" accept="image/*" onChange={handleFileChange} />
-            {preview && (
+            {preview && (<>
                 <div className="mt-2">
-                    <img
+                    <Image
                         src={preview}
+                        width={200}
+                        height={200}
+                        style={{ objectFit: 'contain', border: '1px solid #ddd' }}
                         alt="Önizleme"
-                        style={{ maxWidth: '100%', maxHeight: 200 }}
                     />
                 </div>
+                <div className="mt-2">
+                    <Button variant='danger' name={name} onClick={(e) => {
+                        const fieldName = e.currentTarget.name
+                        setPreview('')
+                        onChange(fieldName, '')
+                    }} >Görseli Sil</Button>
+                </div>
+            </>
             )}
         </Form.Group>
     )

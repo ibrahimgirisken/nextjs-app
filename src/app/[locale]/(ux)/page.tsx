@@ -1,12 +1,16 @@
-import { useTranslations } from 'next-intl';
-import { Link } from '@/i18n/navigation';
+import { getTranslations } from 'next-intl/server';
 
-export default function HomePage() {
-  const t = useTranslations('HomePage');
+export default async function HomePage({ params }: { params: Promise<{ locale: string }> }) {
+  const { locale } = await params;
+  const t = await getTranslations({ locale });
+
+  const productsPath = `/${locale}/${t('routes.products')}`;
+  const categoriesPath = `/${locale}/${t('routes.categories')}`;
   return (
-    <div>
-      <h1>{t('title')}</h1>
-      <Link href="/about">{t('about')}</Link>
-    </div>
+    <>
+      <a href={productsPath}>{t("Menu.products")}</a>
+      <span> | </span>
+      <a href={categoriesPath}>{t("Menu.categories")}</a>
+    </>
   );
 }

@@ -4,13 +4,13 @@ import { Product } from '@/features/product/types/product';
 import { useParams } from 'next/navigation';
 import React, { useEffect } from 'react'
 
-export default function productDetail() {
-    const { url, lang } = useParams();
+export default function productDetail({ params }: { params: { locale: string, slug: string } }) {
+    const { locale, slug } = params;
     const [product, setProduct] = React.useState<Product>();
     const [loading, setLoading] = React.useState(true);
 
     useEffect(() => {
-        getProductByUrlAndLang(url as string, lang as string)
+        getProductByUrlAndLang(slug as string, locale as string)
             .then(setProduct)
             .finally(() => setLoading(false));
     });

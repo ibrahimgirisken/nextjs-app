@@ -16,6 +16,7 @@
     "about": "Go to the about page",
     "hello": "Hello",
     "world": "World",
-    "welcome": "Welcome"
+    "welcome": "Welcome",
+    "details": "details"
   }
 }

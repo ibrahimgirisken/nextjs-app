@@ -11,8 +11,15 @@ export function useProducts() {
 
 export function useProductsByLang(locale: string) {
   return useQuery<Product[]>({
-    queryKey: ['products', locale], // locale'i de ekledik
+    queryKey: ['products', locale],
     queryFn: () => productService.getProductsByLang(locale),
+  });
+}
+
+export function getProductByUrlAndLang(slug: string, locale: string) {
+  return useQuery<Product>({
+    queryKey: ['products', slug, locale],
+    queryFn: () => productService.getProductByUrlAndLang(slug, locale),
   });
 }
 

@@ -1,16 +1,21 @@
 {
   "routes": {
+    "home": "",
     "products": "urunler",
+    "projects": "projeler",
     "categories": "kategoriler"
   },
-  "HomePage": {
-    "title": "Merhaba dünya!",
-    "about": "Hakkında sayfasına git"
-  },
-  "Menu": {
+  "menu": {
     "home": "Ana Sayfa",
     "products": "Ürünler",
     "categories": "Kategoriler",
     "about": "Hakkında"
+  },
+  "other": {
+    "title": "Merhaba Dünya!",
+    "about": "Hakkında sayfasına git",
+    "hello": "Merhaba",
+    "world": "Dünya",
+    "welcome": "Hoş geldin"
   }
 }

@@ -1,6 +1,6 @@
 import React from 'react'
 
-function UXCategoriesPage() {
+async function UXCategoriesPage() {
     return (
         <div>UXCategoriesPage</div>
     )

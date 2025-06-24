@@ -9,6 +9,13 @@ export function useProducts() {
   });
 }
 
+export function useProductsByLang(locale: string) {
+  return useQuery<Product[]>({
+    queryKey: ['products', locale], // locale'i de ekledik
+    queryFn: () => productService.getProductsByLang(locale),
+  });
+}
+
 export function useCreateProduct() {
   const queryClient = useQueryClient();
   return useMutation({

@@ -1,16 +1,21 @@
 {
   "routes": {
+    "home": "",
     "products": "products",
+    "projects": "projects",
     "categories": "categories"
   },
-  "HomePage": {
-    "title": "Hello world!",
-    "about": "Go to the about page"
-  },
-  "Menu": {
+  "menu": {
     "home": "Home",
     "products": "Products",
     "categories": "Categories",
     "about": "About"
+  },
+  "other": {
+    "title": "Hello World!",
+    "about": "Go to the about page",
+    "hello": "Hello",
+    "world": "World",
+    "welcome": "Welcome"
   }
 }

@@ -1,16 +1,21 @@
 {
   "routes": {
+    "home": "",
     "products": "produkte",
+    "projects": "projekte",
     "categories": "kategorien"
   },
-  "HomePage": {
-    "title": "Hallo Welt!",
-    "about": "Gehe zur Über-Seite"
-  },
-  "Menu": {
+  "menu": {
     "home": "Startseite",
     "products": "Produkte",
     "categories": "Kategorien",
     "about": "Über"
+  },
+  "other": {
+    "title": "Hallo Welt!",
+    "about": "Gehe zur Über-Seite",
+    "hello": "Hallo",
+    "world": "Welt",
+    "welcome": "Willkommen"
   }
 }

@@ -1,17 +1,36 @@
+import { notFound } from 'next/navigation';
+import ProductsPage from '../../(ux)/products/page';
+import CategoriesPage from '../../(ux)/categories/page';
+import HomePage from '../../(ux)/page';
 import { getTranslations } from 'next-intl/server';
-import ProductList from '../(ux)/products/page';
-import CategoryList from '../(ux)/categories/page';
 
-export default async function Page({ params }: { params: { locale: string; segments?: string[] } }) {
-    const t = await getTranslations({ locale: params.locale });
-    const [segment] = params.segments ?? [];
+const pages: Record<string, React.FC<{ params: { locale: string } }>> = {
+    home: HomePage,
+    products: ProductsPage,
+    categories: CategoriesPage
+};
 
-    switch (segment) {
-        case t('routes.products'):
-            return <ProductList />;
-        case t('routes.categories'):
-            return <CategoryList />;
-        default:
-            return <div>{t('notFound')}</div>; // 404 veya yönlendirme
-    }
+export default async function Page({
+    params
+}: {
+    params: { locale: string; segments?: string[] };
+}) {
+    const { locale, segments } = await params;
+
+    const t = await getTranslations({ locale });
+
+    // JSON dosyasındaki çeviri karşılıkları
+    const routes = {
+        [await t('routes.products')]: 'products',
+        [await t('routes.categories')]: 'categories',
+        // Anasayfa için segment olmayabilir
+    };
+
+    const rawSegment = segments?.[0] || '';
+    const segmentKey = routes[rawSegment] || 'home';
+
+    const Component = pages[segmentKey];
+    if (!Component) notFound();
+
+    return <Component params={{ locale }} />;
 }

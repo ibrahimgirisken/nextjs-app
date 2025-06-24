@@ -1,18 +1,17 @@
 'use client';
-import { useProducts } from '@/features/product/hooks/useProducts'
-import { Row, Col, Card, Button } from 'react-bootstrap';
+import { useProducts, useProductsByLang } from '@/features/product/hooks/useProducts'
+import { Row, Col, Card } from 'react-bootstrap';
 import { Product } from '@/features/product/types/product';
-import { useLocale } from 'next-intl';
-import { useTranslations } from 'next-intl';
-
+import { useLocale, useTranslations } from 'next-intl';
+import { use } from 'react';
 
 function UXProductsPage() {
-    const { data: products, isLoading, error } = useProducts();
-    const t = useTranslations('products');
     const locale = useLocale();
+    const { data: products, isLoading, error } = useProductsByLang(locale);
+    const t = useTranslations('other');
 
-    if (isLoading) return <div>Loading...</div>
-    if (error) return <div>Error: {error.message}</div>
+    if (isLoading) return <div>Loading...</div>;
+    if (error) return <div>Error: {error.message}</div>;
 
     return (
         <>
@@ -20,7 +19,7 @@ function UXProductsPage() {
             <Row xs={1} md={3} className="g-4">
                 {products?.map((product: Product) => {
                     const translation = product.productTranslations.find(
-                        (t) => t.langCode === locale
+                        (t) => t.langCode.startsWith(locale)
                     );
                     if (!translation) return null;
                     return (
@@ -37,9 +36,9 @@ function UXProductsPage() {
                         </Col>
                     );
                 })}
-            </Row >
+            </Row>
         </>
-    )
+    );
 }
 
 export default UXProductsPage;

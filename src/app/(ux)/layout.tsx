@@ -6,13 +6,13 @@ import { Container } from 'react-bootstrap'
 export default function UXLayout({ children }: { children: React.ReactNode }) {
   return (
     <>
-      <UXHeader />
       <main>
+        <UXHeader />
         <Container>
           {children}
         </Container>
+        <UXFooter />
       </main>
-      <UXFooter />
     </>
   )
 }

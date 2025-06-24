@@ -11,9 +11,11 @@ export default function RootLayout({ children }: { children: ReactNode }) {
   return (
     <html lang="tr">
       <body>
+
         <ClientProviders>
           {children}
         </ClientProviders>
+
       </body>
     </html>
   );

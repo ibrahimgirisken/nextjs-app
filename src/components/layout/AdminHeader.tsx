@@ -8,11 +8,11 @@ export default function UXHeader() {
       <header className="text-white">
         <Navbar variant="dark" bg="dark" expand="lg">
           <Container>
-            <Navbar.Brand href="#home">CW</Navbar.Brand>
+            <Navbar.Brand href="../">CW</Navbar.Brand>
             <Navbar.Toggle aria-controls="navbar-dark-example" />
             <Navbar.Collapse id="navbar-dark-example">
               <Nav>
-                <Nav.Link href="/">Site</Nav.Link>
+                <Nav.Link href="">Site</Nav.Link>
               </Nav>
             </Navbar.Collapse>
           </Container>

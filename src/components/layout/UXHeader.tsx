@@ -13,7 +13,7 @@ export default function UXHeader() {
             <Navbar.Toggle aria-controls="navbar-dark-example" />
             <Navbar.Collapse id="navbar-dark-example">
               <Nav>
-                <Nav.Link href="#home">Home</Nav.Link>
+                <Nav.Link href="/">Home</Nav.Link>
                 <NavDropdown
                   id="nav-dropdown-dark-example"
                   title="Ürünler"

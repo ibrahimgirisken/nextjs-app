@@ -3,13 +3,17 @@
     "home": "",
     "products": "urunler",
     "projects": "projeler",
-    "categories": "kategoriler"
+    "categories": "kategoriler",
+    "adminDashboard": "admin",
+    "adminProducts": "admin/urunler",
+    "adminCategories": "admin/kategoriler"
   },
   "menu": {
     "home": "Ana Sayfa",
     "products": "Ürünler",
     "categories": "Kategoriler",
-    "about": "Hakkında"
+    "about": "Hakkında",
+    "dashboard": "Dashboard"
   },
   "other": {
     "title": "Merhaba Dünya!",

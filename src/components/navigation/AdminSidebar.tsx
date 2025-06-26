@@ -4,20 +4,25 @@ import { useState } from 'react'
 import { Navbar, Offcanvas, Nav, Button } from 'react-bootstrap'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
+import { useLocale, useTranslations } from 'next-intl';
 
 export default function ResponsiveSidebar() {
+  const locale = useLocale();
+  const t = useTranslations();
   const [show, setShow] = useState(false)
   const pathname = usePathname()
 
   const toggle = () => setShow(!show)
   const isActive = (href: string) => pathname === href
 
+  const dashboardPath = `/${locale}/${t('routes.adminDashboard')}`;
+  const productsPath = `/${locale}/${t('routes.adminProducts')}`;
+  const categoriesPath = `/${locale}/${t('routes.adminCategories')}`;
+
   const links = [
-    { href: '/admin/dashboard', label: 'Dashboard' },
-    { href: '/admin/products', label: 'Ürünler' },
-    { href: '/admin/categories', label: 'Kategoriler' },
-    { href: '/admin/brands', label: 'Markalar' },
-    { href: '/admin/settings', label: 'Ayarlar' },
+    { href: dashboardPath, label: t('menu.dashboard') },
+    { href: productsPath, label: t('menu.products') },
+    { href: categoriesPath, label: t('menu.categories') },
   ]
 
   return (

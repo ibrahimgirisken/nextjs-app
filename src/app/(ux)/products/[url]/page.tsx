@@ -13,7 +13,7 @@ export default function productDetail({ params }: { params: { locale: string, sl
         getProductByUrlAndLang(slug as string, locale as string)
             .then(setProduct)
             .finally(() => setLoading(false));
-    });
+    }, [])
     return (
         <>
             <h1>{product?.code}</h1>

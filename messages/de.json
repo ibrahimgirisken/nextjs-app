@@ -3,13 +3,17 @@
     "home": "",
     "products": "produkte",
     "projects": "projekte",
-    "categories": "kategorien"
+    "categories": "kategorien",
+    "adminDashboard": "admin",
+    "adminProducts": "admin/produkte",
+    "adminCategories": "admin/kategorien"
   },
   "menu": {
     "home": "Startseite",
     "products": "Produkte",
     "categories": "Kategorien",
-    "about": "Über"
+    "about": "Über",
+    "dashboard": "Dashboard"
   },
   "other": {
     "title": "Hallo Welt!",

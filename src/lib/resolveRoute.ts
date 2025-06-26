@@ -13,33 +13,36 @@ export async function resolveRoute(params: Params) {
 
   const firstSegment = segments[0] ?? '';
   const slug = segments[1] ?? undefined;
-  const isDetailPage = !!slug;
 
-  const translatedPaths: Record<string, keyof typeof routesConfig> = Object.entries(routesConfig)
+  const translatedPaths = Object.entries(routesConfig)
     .filter(([, route]) => !route.hasSlug)
     .reduce(
       (acc, [key, route]) => {
-        const i18nKey = route.i18nKey ?? `routes.${key}`;
-        acc[t(i18nKey)] = key as keyof typeof routesConfig;
+        const tKey = route.i18nKey ?? `routes.${key}`;
+        acc[t(tKey)] = key as keyof typeof routesConfig;
         return acc;
       },
       {} as Record<string, keyof typeof routesConfig>
     );
 
-  const baseKey = translatedPaths[firstSegment] ?? 'home';
+  let matchedKey = translatedPaths[firstSegment] ?? 'home';
+  const baseRoute = routesConfig[matchedKey];
 
-  const detailRouteMap: Record<string, keyof typeof routesConfig> = {
-    products: 'productDetail',
-    categories: 'categoryDetail',
-    // diğer eşleşmeleri burada tanımla
-  };
+  // Slug varsa detay sayfa bul
+  if (baseRoute && baseRoute.hasSlug === false && slug) {
+    const detailKey = Object.keys(routesConfig).find((key) => {
+      const r = routesConfig[key];
+      return r.i18nKey === baseRoute.i18nKey && r.hasSlug;
+    }) as keyof typeof routesConfig;
 
-  const finalKey = isDetailPage ? (detailRouteMap[baseKey] ?? baseKey) : baseKey;
+    if (detailKey) {
+      matchedKey = detailKey;
+    }
+  }
 
-  const routeEntry = routesConfig[finalKey];
-  if (!routeEntry) return notFound();
-
-  if (routeEntry.hasSlug && !slug) return notFound();
+  const routeEntry = routesConfig[matchedKey];
+  if (!routeEntry) notFound();
+  if (routeEntry.hasSlug && !slug) notFound();
 
   return {
     component: routeEntry.component,

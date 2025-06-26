@@ -2,8 +2,14 @@ import React from 'react'
 import AdminFooter from '@/components/layout/AdminFooter'
 import AdminHeader from '@/components/layout/AdminHeader'
 import AdminSidebar from '@/components/navigation/AdminSidebar'
+import { useLocale } from 'next-intl';
+export default function AdminLayout({
+  children
+}: {
+  children: React.ReactNode
+}) {
+  const locale = useLocale();
 
-export default function AdminLayout({ children }: { children: React.ReactNode }) {
   return (
     <>
       <AdminHeader />

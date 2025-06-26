@@ -8,6 +8,7 @@ import AdminDashboardPage from '@/app/admin/dashboard/page';
 import AdminProductsPage from '@/app/admin/products/page';
 import AdminCategoriesPage from '@/app/admin/categories/page';
 import { RouteEntry } from '@/features/route/type/routeEntry';
+import { redirect } from 'next/navigation';
 
 export const routesConfig: Record<string, RouteEntry> = {
   home: {
@@ -29,6 +30,7 @@ export const routesConfig: Record<string, RouteEntry> = {
     component: ProductDetailPage,
     layout: 'ux',
     hasSlug: true,
+    i18nKey: 'routes.products',
   },
   categories: {
     path: 'categories',
@@ -43,5 +45,17 @@ export const routesConfig: Record<string, RouteEntry> = {
     layout: 'ux',
     hasSlug: true,
   },
+  adminDashboard: {
+    path: 'admin',
+    component: AdminDashboardPage,
+    layout: 'admin',
+    hasSlug: false,
+  },
+  adminProducts: {
+    path: 'admin/products',
+    component: AdminProductsPage,
+    layout: 'admin',
+    hasSlug: false,
+    i18nKey: 'routes.adminProducts',
+  },
 };
-

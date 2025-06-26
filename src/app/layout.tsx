@@ -7,16 +7,10 @@ export const metadata = {
   description: 'CW Enerji yönetim ve kullanıcı paneli',
 };
 
-export default function RootLayout({ children }: { children: ReactNode }) {
+export default async function RootLayout({ children }: { children: ReactNode }) {
   return (
-    <html lang="tr">
-      <body>
-
-        <ClientProviders>
-          {children}
-        </ClientProviders>
-
-      </body>
-    </html>
+    <ClientProviders>
+      {children}
+    </ClientProviders>
   );
 }

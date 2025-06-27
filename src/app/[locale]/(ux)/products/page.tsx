@@ -14,7 +14,7 @@ function UXProductsPage() {
 
     return (
         <>
-            <h1 className="text-2xl font-semibold mb-4">{t('other.title')}</h1>
+            <h1 className="text-2xl font-semibold mb-4">{t('other.productTitle')}</h1>
             <Row xs={1} md={3} className="g-4">
                 {products?.map((product: Product) => {
                     const translation = product.productTranslations.find(

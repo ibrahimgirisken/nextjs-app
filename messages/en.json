@@ -20,7 +20,8 @@
     "dashboard": "Dashboard"
   },
   "other": {
-    "title": "Hello World!",
+    "title": "Title",
+    "productTitle": "Products",
     "about": "Go to the about page",
     "hello": "Hello",
     "world": "World",

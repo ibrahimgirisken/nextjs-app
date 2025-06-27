@@ -20,7 +20,8 @@
     "dashboard": "Dashboard"
   },
   "other": {
-    "title": "Merhaba Dünya!",
+    "title": "Başlık",
+    "productTitle": "Ürünler",
     "about": "Hakkında sayfasına git",
     "hello": "Merhaba",
     "world": "Dünya",

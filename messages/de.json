@@ -21,7 +21,8 @@
     "dashboard": "Dashboard"
   },
   "other": {
-    "title": "Hallo Welt!",
+    "title": "Titel",
+    "productTitle": "Produkte",
     "about": "Gehe zur Über-Seite",
     "hello": "Hallo",
     "world": "Welt",

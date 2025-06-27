@@ -15,9 +15,9 @@ export default function ResponsiveSidebar() {
   const toggle = () => setShow(!show)
   const isActive = (href: string) => pathname === href
 
-  const dashboardPath = `/${locale}/${t('routes.adminDashboard')}`;
-  const productsPath = `/${locale}/${t('routes.adminProducts')}`;
-  const categoriesPath = `/${locale}/${t('routes.adminCategories')}`;
+  const dashboardPath = `/${locale}/${t('routes.admin.dashboard')}`;
+  const productsPath = `/${locale}/${t('routes.admin.products')}`;
+  const categoriesPath = `/${locale}/${t('routes.admin.categories')}`;
 
   const links = [
     { href: dashboardPath, label: t('menu.dashboard') },

@@ -1,12 +1,16 @@
 {
   "routes": {
-    "home": "",
-    "products": "urunler",
-    "projects": "projeler",
-    "categories": "kategoriler",
-    "adminDashboard": "admin",
-    "adminProducts": "admin/urunler",
-    "adminCategories": "admin/kategoriler"
+    "admin": {
+      "dashboard": "/admin",
+      "products": "/admin/urunler",
+      "categories": "/admin/kategoriler"
+    },
+    "ux": {
+      "home": "/",
+      "products": "/urunler",
+      "projects": "/projeler",
+      "categories": "/kategoriler"
+    }
   },
   "menu": {
     "home": "Ana Sayfa",

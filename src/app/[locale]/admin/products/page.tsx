@@ -19,6 +19,7 @@ export default function ProductList() {
         return <Spinner animation="border" />
     }
     return (
+
         <div>
             <div className="d-flex justify-content-between align-items-center mb-3">
                 <h2>Ürün Listesi</h2>

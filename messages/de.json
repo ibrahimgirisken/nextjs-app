@@ -1,12 +1,17 @@
 {
   "routes": {
-    "home": "",
-    "products": "produkte",
-    "projects": "projekte",
-    "categories": "kategorien",
-    "adminDashboard": "admin",
-    "adminProducts": "admin/produkte",
-    "adminCategories": "admin/kategorien"
+    "admin": {
+      "dashboard": "admin",
+      "products": "admin/produkte",
+      "categories": "admin/kategorien"
+    },
+    "ux": {
+      "home": "",
+      "products": "produkte",
+      "projects": "projekte",
+      "categories": "kategorien",
+      "adminDashboard": "admin"
+    }
   },
   "menu": {
     "home": "Startseite",

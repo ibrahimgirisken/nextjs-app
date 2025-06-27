@@ -1,27 +1,32 @@
-import { NextIntlClientProvider, hasLocale } from 'next-intl';
-import { notFound } from 'next/navigation';
-import { routing } from '@/i18n/routing';
+import '@/styles/globals.css';
+import { ReactNode } from 'react';
+import { NextIntlClientProvider } from 'next-intl';
+import ClientProviders from '@/components/ClientProviders';
 
-export default async function LocaleLayout({
-    children,
-    params
-}: {
-    children: React.ReactNode;
-    params: { locale: string };
-}) {
-    const { locale } = await params;
+export const metadata = {
+  title: 'CW Enerji',
+  description: 'CW Enerji yönetim ve kullanıcı paneli',
+};
 
-    if (!hasLocale(routing.locales, locale)) {
-        notFound();
-    }
+type Props = {
+  children: ReactNode;
+  params: {
+    locale: string;
+  };
+}
 
-    return (
-        <html lang={locale}>
-            <body>
-                <NextIntlClientProvider locale={locale}>
-                    {children}
-                </NextIntlClientProvider>
-            </body>
-        </html>
-    );
+export default async function RootLayout({ children, params }: Props) {
+  const { locale } = params;
+  const messages = (await import(`../../../messages/${locale}.json`)).default;
+  return (
+    <html lang={locale}>
+      <body>
+        <NextIntlClientProvider locale={locale} messages={messages}>
+          <ClientProviders>
+            {children}
+          </ClientProviders>
+        </NextIntlClientProvider>
+      </body>
+    </html>
+  );
 }

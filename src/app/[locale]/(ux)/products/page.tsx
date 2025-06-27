@@ -8,7 +8,6 @@ function UXProductsPage() {
     const locale = useLocale();
     const { data: products, isLoading, error } = useProductsByLang(locale);
     const t = useTranslations();
-    const productsPath = `/${locale}/${t('routes.products')}`;
 
     if (isLoading) return <div>Loading...</div>;
     if (error) return <div>Error: {error.message}</div>;
@@ -30,7 +29,7 @@ function UXProductsPage() {
                                     <Card.Title>{product.code}</Card.Title>
                                     <Card.Title>{translation.name}</Card.Title>
                                     <Card.Text>{translation.brief}</Card.Text>
-                                    <a className='btn btn-primary' href={`${productsPath}/${translation.url}`}>{t('other.details')}</a>
+                                    <a className='btn btn-primary' href={`/${translation.url}`}>{t('other.details')}</a>
                                 </Card.Body>
                             </Card>
                         </Col>

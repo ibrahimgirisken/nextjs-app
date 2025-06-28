@@ -29,7 +29,7 @@ function UXProductsPage() {
                                     <Card.Title>{product.code}</Card.Title>
                                     <Card.Title>{translation.name}</Card.Title>
                                     <Card.Text>{translation.brief}</Card.Text>
-                                    <a className='btn btn-primary' href={`/${translation.url}`}>{t('other.details')}</a>
+                                    <a className='btn btn-primary' href={`products/${translation.url}`}>{t('other.details')}</a>
                                 </Card.Body>
                             </Card>
                         </Col>

@@ -1,33 +1,46 @@
 'use client';
+
+import { useEffect, useState } from 'react';
+import { Container } from 'react-bootstrap';
+import { useLocale } from 'next-intl';
 import { getProductByUrlAndLang } from '@/features/product/api/productService';
 import { Product } from '@/features/product/types/product';
-import React, { useEffect } from 'react'
-import { Container } from 'react-bootstrap';
-import { useLocale } from 'use-intl/react';
 
-export default function productDetail({ params }: { params: { slug: string } }) {
-    const { slug } = params;
-    const locale = useLocale();
-    const [product, setProduct] = React.useState<Product>();
-    const [loading, setLoading] = React.useState(true);
-    useEffect(() => {
-        getProductByUrlAndLang(slug as string, locale as string)
-            .then(setProduct)
-            .finally(() => setLoading(false));
-    }, [slug, locale]);
-    console.log(slug);
-    return (
+export default function ProductDetailPage({ params }: { params: { url: string } }) {
+  const { url } = params;
+  const locale = useLocale();
+
+  const [product, setProduct] = useState<Product | null>(null);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    if (!url || !locale) return;
+
+    getProductByUrlAndLang(url, locale)
+      .then(setProduct)
+      .catch((err) => {
+        console.error('Ürün getirilemedi:', err);
+        setProduct(null);
+      })
+      .finally(() => setLoading(false));
+  }, [url, locale]);
+ 
+  
+  if (loading) return <div>Yükleniyor...</div>;
+  if (!product) return <div>Ürün bulunamadı.</div>;
+
+  const translation = product.productTranslations.find(t => t.langCode.startsWith(locale));
+
+  return (
+    <Container>
+      <h1>{product.code}</h1>
+      {translation && (
         <>
-            <h1>{product?.code}</h1>
-            <Container>
-                {product ? product.productTranslations.map((translation) => (
-                    <div key={translation.langCode}>
-                        <h2>{translation.brief}</h2>
-                        <p>{translation.brief}</p>
-                        <p>{translation.content}</p>
-                    </div>
-                )) : null}
-            </Container>
+          <h2>{translation.name}</h2>
+          <p>{translation.brief}</p>
+          <div dangerouslySetInnerHTML={{ __html: translation.content }} />
         </>
-    )
+      )}
+    </Container>
+  );
 }

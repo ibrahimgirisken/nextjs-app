@@ -18,12 +18,11 @@ type Props = {
 export default async function RootLayout(props: Awaited<Props>) {
   const { locale } = await props.params;
   console.log(locale);
-  const messages = (await import(`../../../messages/${locale}.json`)).default;
   return (
     <html lang={locale}>
       <body>
         <ClientProviders>
-          <NextIntlClientProvider locale={locale} messages={messages}>
+          <NextIntlClientProvider locale={locale}>
             {props.children}
           </NextIntlClientProvider>
         </ClientProviders>

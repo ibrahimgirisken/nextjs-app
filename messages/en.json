@@ -1,15 +1,11 @@
 {
   "routes": {
-    "admin": {
-      "dashboard": "admin",
-      "products": "admin/products",
-      "categories": "admin/categories"
-    },
     "ux": {
       "home": "",
       "products": "products",
       "projects": "projects",
-      "categories": "categories"
+      "categories": "categories",
+      "brands":"brands"
     }
   },
   "menu": {

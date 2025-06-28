@@ -1,16 +1,11 @@
 {
   "routes": {
-    "admin": {
-      "dashboard": "admin",
-      "products": "admin/produkte",
-      "categories": "admin/kategorien"
-    },
     "ux": {
       "home": "",
       "products": "produkte",
       "projects": "projekte",
       "categories": "kategorien",
-      "adminDashboard": "admin"
+      "brands":"marken"
     }
   },
   "menu": {

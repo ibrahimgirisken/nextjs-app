@@ -1,15 +1,11 @@
 {
   "routes": {
-    "admin": {
-      "dashboard": "/admin",
-      "products": "/admin/urunler",
-      "categories": "/admin/kategoriler"
-    },
     "ux": {
-      "home": "/",
-      "products": "/urunler",
-      "projects": "/projeler",
-      "categories": "/kategoriler"
+      "home": "",
+      "products": "urunler",
+      "projects": "projeler",
+      "categories": "kategoriler",
+      "brands":"markalar"
     }
   },
   "menu": {

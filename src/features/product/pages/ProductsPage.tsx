@@ -17,8 +17,8 @@ export default function UXProductsPage({ locale }: { locale: string }) {
       <h1 className="text-2xl font-semibold mb-4">{t('other.productTitle')}</h1>
       <Row xs={1} md={3} className="g-4">
         {products?.map((product: Product) => {
-          const translation = product.productTranslations.find(
-            (t) => t.langCode.startsWith(locale)
+          const translation = product.productTranslations.find((t) =>
+            t.langCode.startsWith(locale)
           );
           if (!translation) return null;
 
@@ -29,7 +29,10 @@ export default function UXProductsPage({ locale }: { locale: string }) {
                   <Card.Title>{product.code}</Card.Title>
                   <Card.Title>{translation.name}</Card.Title>
                   <Card.Text>{translation.brief}</Card.Text>
-                  <a className="btn btn-primary" href={`/${translation.url}`}>
+                  <a
+                    className="btn btn-primary"
+                    href={`/${t('routes.ux.products')}/${translation.url}`}
+                  >
                     {t('other.details')}
                   </a>
                 </Card.Body>

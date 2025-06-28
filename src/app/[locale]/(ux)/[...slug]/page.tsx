@@ -1,41 +1,50 @@
 import { getTranslations } from 'next-intl/server';
-import { notFound } from 'next/navigation';
-import UXProductsPage from '@/features/product/pages/UXProductsPage';
-import UXCategoriesPage from '@/features/category/pages/UXCategoriesPage';
-import UXBrandsPage from '@/features/brand/pages/UXBrandsPage';
+import resolveRouteKey from '@/utils/resolveRouteKey';
 
-type Props = {
-  params: {
-    locale: string;
-    slug?: string[];
+import ProductList from '@/features/product/pages/ProductsPage';
+import ProductDetail from '@/features/product/pages/ProductDetailPage';
+// ... diğer componentler
+
+export default async function UXRouter(props: { params: { locale: string; slug?: string[] } }) {
+  const { params } = props;
+  const { locale, slug = [] } = await params;
+
+  const t = await getTranslations({ locale, namespace: 'routes.ux' });
+
+  const translatedRoutes = {
+    products: await t('products'),
+    categories: await t('categories'),
+    projects: await t('projects'),
   };
-};
 
-// Eşleme tablosu
-const componentsMap = {
-  products: UXProductsPage,
-  categories: UXCategoriesPage,
-  brands: UXBrandsPage
-};
+  const routeSegment = slug[0]; // örn. 'urunler'
+  const detailSegment = slug[1]; // örn. 'akilli-panel'
 
-export default async function Page({ params }: Props) {
-  const { locale, slug = [] } =await params;
+  const routeKey = resolveRouteKey(routeSegment, translatedRoutes);
 
-const t = await getTranslations({ locale, namespace: 'routes.ux' });
+  if (!routeKey) return <div>404 Not Found</div>;
 
-  const routeSegment = slug[0] || '';
+  // Detay sayfası
+  if (detailSegment) {
+    switch (routeKey) {
+      case 'products':
+        return <ProductDetail slug={detailSegment} locale={locale} />;
+      case 'projects':
+        return <div>Proje Detay</div>;
+      default:
+        return <div>Detay Sayfası Yok</div>;
+    }
+  }
 
-  // Dil dosyasındaki route eşlemesini tersten çöz
-const routeKey = Object.entries({
-  products: t('products'),
-  categories: t('categories'),
-  brands: t('brands')
-}).find(([, value]) => value === routeSegment)?.[0];
-
-  if (!routeKey) return notFound();
-
-  const Component = componentsMap[routeKey as keyof typeof componentsMap];
-  if (!Component) return notFound();
-
-  return <Component locale={locale} />;
+  // Liste sayfası
+  switch (routeKey) {
+    case 'products':
+      return <ProductList locale={locale} />;
+    case 'projects':
+      return <div>Projeler Listesi</div>;
+    case 'categories':
+      return <div>Kategoriler Listesi</div>;
+    default:
+      return <div>404 Not Found</div>;
+  }
 }

@@ -3,6 +3,6 @@ import { productService } from '../api/productService';
 export const {
   useAll: useProducts,
   useByLang: useProductsByLang,
-  useCreate: useCrateProduct,
+  useCreate: useCreteProduct,
   useUpdate: useUpdateProduct,
 } = createQueryHooks('products', productService);

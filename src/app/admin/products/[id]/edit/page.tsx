@@ -1,9 +1,9 @@
 'use client'
-import { getBrands } from "@/features/brand/api/brandService"
+import { brandService } from "@/features/brand/api/brandService"
 import { Brand } from "@/features/brand/types/brand"
-import { getCategories } from "@/features/category/api/categoryService"
+import { categoryService } from "@/features/category/api/categoryService"
 import { Category } from "@/features/category/types/category"
-import { getProductById } from "@/features/product/api/productService"
+import { productService } from "@/features/product/api/productService"
 import ProductForm from "@/features/product/components/ProductForm"
 import { Product } from "@/features/product/types/product"
 import { useParams, useRouter } from "next/navigation"
@@ -17,18 +17,18 @@ export default function ProductEdit() {
     const [brands, setBrands] = useState<Brand[]>([])
 
     useEffect(() => {
-        getCategories()
+        categoryService.getAll()
             .then(setCategories)
     }, [])
 
     useEffect(() => {
-        getBrands()
+        brandService.getAll()
             .then(setBrands)
     }, [])
 
     useEffect(() => {
         if (id) {
-            getProductById(id as string).then(setProduct)
+            productService.getById(id as string).then(setProduct)
         }
     }, [id])
 

@@ -1,5 +1,5 @@
 'use client'
-import { getCategoryById } from '@/features/category/api/categoryService'
+import { categoryService } from '@/features/category/api/categoryService'
 import CategoryForm from '@/features/category/components/CategoryForm'
 import { Category } from '@/features/category/types/category'
 import { useParams, useRouter } from 'next/navigation'
@@ -12,7 +12,7 @@ export default function CategoryEdit() {
 
     useEffect(() => {
         if (id) {
-            getCategoryById(id as string).then(setCategory)
+            categoryService.getById(id as string).then(setCategory)
         }
     }, [id])
     return (

@@ -2,11 +2,11 @@
 import { useEffect, useState } from 'react'
 import { Form, Button, Row, Col, Tabs, Tab } from 'react-bootstrap'
 import { Product } from '../types/product'
-import { createProduct, updateProduct } from '../api/productService'
 import { Category } from '@/features/category/types/category'
 import { Brand } from '@/features/brand/types/brand'
 import ImageUpload from '@/shared/imageUpload'
 import { reviseTheText } from '@/lib/reviseTheText'
+import { productService } from '../api/productService'
 
 type ProductFormProps = {
   initialData?: Product,
@@ -100,10 +100,10 @@ export default function ProductForm({ initialData, categoryList, brandList, onSu
     e.preventDefault()
     try {
       if (formData.id) {
-        await updateProduct(formData)
+        await productService.update(formData)
       } else {
         const { id, ...dataToSend } = formData
-        await createProduct(dataToSend)
+        await productService.create(dataToSend)
       }
       if (onSuccess) onSuccess()
     } catch (error) {

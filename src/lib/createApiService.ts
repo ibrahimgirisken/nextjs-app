@@ -1,6 +1,7 @@
 import api from './axiosClient';
 
 type EntityWithId = { id: string };
+type UpdateDto<T extends EntityWithId> = Partial<Omit<T, 'id'>> & { id: string };
 
 export function createApiService<T extends EntityWithId>(basePath: string) {
   return {
@@ -18,7 +19,8 @@ export function createApiService<T extends EntityWithId>(basePath: string) {
     create: (data: Omit<T, 'id'>): Promise<T> =>
       api.post(`/${basePath}/add`, data).then((res) => res.data),
 
-    update: (data: T): Promise<T> => api.put(`/${basePath}/update`, data).then((res) => res.data),
+    update: (data: UpdateDto<T>): Promise<T> =>
+      api.put(`/${basePath}/update`, data).then((res) => res.data),
 
     delete: (id: string): Promise<any> => api.delete(`/${basePath}/${id}`).then((res) => res.data),
   };

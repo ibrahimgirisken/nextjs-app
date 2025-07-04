@@ -3,18 +3,19 @@ import resolveRouteKey from '@/utils/resolveRouteKey';
 
 import ProductList from '@/features/product/pages/ProductsPage';
 import ProductDetail from '@/features/product/pages/ProductDetailPage';
+import { getSafeTranslations } from '@/i18n/getTranslationsSafe';
 // ... diğer componentler
 
 export default async function UXRouter(props: { params: { locale: string; slug?: string[] } }) {
   const { params } = props;
   const { locale, slug = [] } = await params;
 
-  const t = await getTranslations({ locale, namespace: 'routes.ux' });
+  const t = await getSafeTranslations({ locale });
 
   const translatedRoutes = {
-    products: await t('products'),
-    categories: await t('categories'),
-    projects: await t('projects'),
+    products: await t('route.products'),
+    categories: await t('route.categories'),
+    projects: await t('route.projects'),
   };
 
   const routeSegment = slug[0]; // örn. 'urunler'

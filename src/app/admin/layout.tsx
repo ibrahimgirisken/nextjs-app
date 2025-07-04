@@ -10,12 +10,11 @@ export const metadata = {
 
 export default async function AdminLayout({ children }: { children: ReactNode }) {
   const locale = 'tr';
-  const messages = (await import(`../../../messages/${locale}.json`)).default;
 
   return (
     <html lang={locale}>
       <body>
-        <NextIntlClientProvider locale={locale} messages={messages}>
+        <NextIntlClientProvider locale={locale}>
           <AdminLayoutClient>{children}</AdminLayoutClient>
         </NextIntlClientProvider>
       </body>

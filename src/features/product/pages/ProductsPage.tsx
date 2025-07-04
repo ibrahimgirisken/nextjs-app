@@ -3,11 +3,11 @@
 import { useProductsByLang } from '@/features/product/hooks/useProducts';
 import { Row, Col, Card } from 'react-bootstrap';
 import { Product } from '@/features/product/types/product';
-import { useTranslations } from 'next-intl';
+import { getUseTranslationsSafe } from '@/i18n/getUseTranslationsSafe';
 
 export default function UXProductsPage({ locale }: { locale: string }) {
   const { data: products, isLoading, error } = useProductsByLang(locale);
-  const t = useTranslations();
+  const t = getUseTranslationsSafe();
 
   if (isLoading) return <div>Loading...</div>;
   if (error) return <div>Error: {error.message}</div>;
@@ -31,7 +31,7 @@ export default function UXProductsPage({ locale }: { locale: string }) {
                   <Card.Text>{translation.brief}</Card.Text>
                   <a
                     className="btn btn-primary"
-                    href={`/${t('routes.ux.products')}/${translation.url}`}
+                    href={`/${t('route.products')}/${translation.url}`}
                   >
                     {t('other.details')}
                   </a>
@@ -44,3 +44,4 @@ export default function UXProductsPage({ locale }: { locale: string }) {
     </>
   );
 }
+

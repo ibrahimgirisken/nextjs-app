@@ -24,8 +24,8 @@ export default function ProductDetailPage({ params }: { params: { url: string } 
       })
       .finally(() => setLoading(false));
   }, [url, locale]);
- 
-  
+
+
   if (loading) return <div>Yükleniyor...</div>;
   if (!product) return <div>Ürün bulunamadı.</div>;
 

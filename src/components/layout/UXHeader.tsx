@@ -9,7 +9,7 @@ import { useTranslations } from 'use-intl';
 
 export default function UXHeader() {
   const locale = useLocale();
-  const t = useTranslations('routes.ux');
+  const t = useTranslations();
   return (
     <>
       <header className="text-white">
@@ -19,16 +19,16 @@ export default function UXHeader() {
             <Navbar.Toggle aria-controls="navbar-dark-example" />
             <Navbar.Collapse id="navbar-dark-example">
               <Nav>
-                <Nav.Link href="/">Home</Nav.Link>
+                <Nav.Link href="/">{capitalizeFirstLetter(t('route.homepage'))}</Nav.Link>
                 <NavDropdown
                   id="nav-dropdown-dark-example"
-                  title={capitalizeFirstLetter(t('products'))}
+                  title={capitalizeFirstLetter(t('route.products'))}
                   menuVariant="dark"
                 >
-                  <NavDropdown.Item href={`/${locale}/${t('products')}`}>
-                    {capitalizeFirstLetter(t('products'))}
+                  <NavDropdown.Item href={`/${locale}/${t('route.products')}`}>
+                    {capitalizeFirstLetter(t('route.products'))}
                   </NavDropdown.Item>
-                  <NavDropdown.Item href="#action/3.2">Another action</NavDropdown.Item>
+                  <NavDropdown.Item href={`/${locale}/${t('route.projects')}`}>{capitalizeFirstLetter(t('route.projects'))}</NavDropdown.Item>
                   <NavDropdown.Item href="#action/3.3">Something</NavDropdown.Item>
                   <NavDropdown.Divider />
                   <NavDropdown.Item href="#action/3.4">Separated link</NavDropdown.Item>
@@ -38,7 +38,7 @@ export default function UXHeader() {
             </Navbar.Collapse>
           </Container>
         </Navbar>
-      </header>
+      </header >
     </>
   );
 }

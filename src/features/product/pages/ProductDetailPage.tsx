@@ -2,9 +2,8 @@
 
 import { useEffect, useState } from 'react';
 import { Container } from 'react-bootstrap';
-import { useLocale } from 'next-intl';
-import { getProductByUrlAndLang } from '@/features/product/api/productService';
 import { Product } from '@/features/product/types/product';
+import { productService } from '../api/productService';
 
 export default function ProductDetailPage({ slug, locale }: { slug: string; locale: string }) {
 
@@ -14,7 +13,7 @@ export default function ProductDetailPage({ slug, locale }: { slug: string; loca
   useEffect(() => {
     if (!slug || !locale) return;
 
-    getProductByUrlAndLang(slug, locale)
+    productService.getByUrlAndLang(slug, locale)
       .then(setProduct)
       .catch((err) => {
         console.error('Ürün getirilemedi:', err);
@@ -22,8 +21,8 @@ export default function ProductDetailPage({ slug, locale }: { slug: string; loca
       })
       .finally(() => setLoading(false));
   }, [slug, locale]);
- 
-  
+
+
   if (loading) return <div>Yükleniyor...</div>;
   if (!product) return <div>Ürün bulunamadı.</div>;
 

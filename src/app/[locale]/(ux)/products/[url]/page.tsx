@@ -3,9 +3,9 @@
 import { useEffect, useState } from 'react';
 import { Container } from 'react-bootstrap';
 import { useLocale } from 'next-intl';
-import { getProductByUrlAndLang } from '@/features/product/api/productService';
 import { Product } from '@/features/product/types/product';
 import { useParams } from 'next/navigation';
+import { productService } from '@/features/product/api/productService';
 
 export default function ProductDetailPage() {
   const params = useParams();
@@ -19,7 +19,7 @@ export default function ProductDetailPage() {
   useEffect(() => {
     if (!url || !locale) return;
 
-    getProductByUrlAndLang(url, locale)
+    productService.getByUrlAndLang(url, locale)
       .then(setProduct)
       .catch((err) => {
         console.error('Ürün getirilemedi:', err);

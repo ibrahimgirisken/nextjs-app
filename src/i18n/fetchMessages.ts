@@ -11,7 +11,7 @@ export async function fetchMessages(locale: string): Promise<Record<string, any>
   const flat: Record<string, string> = {};
 
   for (const item of data) {
-    const translation = item.translations.find((t) => t.langCode === locale);
+    const translation = item.translations.find((t: any) => t.langCode === locale);
     if (translation) {
       flat[item.key] = translation.value;
     }

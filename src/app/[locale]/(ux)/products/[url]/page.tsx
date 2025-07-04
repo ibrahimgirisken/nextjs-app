@@ -5,9 +5,12 @@ import { Container } from 'react-bootstrap';
 import { useLocale } from 'next-intl';
 import { getProductByUrlAndLang } from '@/features/product/api/productService';
 import { Product } from '@/features/product/types/product';
+import { useParams } from 'next/navigation';
 
-export default function ProductDetailPage({ params }: { params: { url: string } }) {
-  const { url } = params;
+export default function ProductDetailPage() {
+  const params = useParams();
+  const rawUrl = params?.url;
+  const url = Array.isArray(rawUrl) ? rawUrl[0] : rawUrl;
   const locale = useLocale();
 
   const [product, setProduct] = useState<Product | null>(null);

@@ -1,5 +1,5 @@
 'use client'
-import { getCategories } from '@/features/category/api/categoryService'
+import { categoryService } from '@/features/category/api/categoryService'
 import { Category } from '@/features/category/types/category'
 import Link from 'next/link'
 import React, { useEffect, useState } from 'react'
@@ -11,7 +11,7 @@ export default function CategoryList() {
     const [loading, setLoading] = useState(true)
 
     useEffect(() => {
-        getCategories()
+        categoryService.getAll()
             .then(setCategories)
             .finally(() => setLoading(false))
     }, [])

@@ -4,4 +4,5 @@ export const {
   useAll: useProducts,
   useByLang: useProductsByLang,
   useCreate: useCrateProduct,
+  useUpdate: useUpdateProduct,
 } = createQueryHooks('products', productService);

@@ -1,6 +1,6 @@
 'use client'
 
-import { getProducts } from "@/features/product/api/productService"
+import { productService } from "@/features/product/api/productService"
 import { Product } from "@/features/product/types/product"
 import Link from "next/link"
 import { useEffect, useState } from "react"
@@ -11,7 +11,7 @@ export default function ProductList() {
     const [loading, setLoading] = useState(true)
 
     useEffect(() => {
-        getProducts()
+        productService.getAll()
             .then(setProducts)
             .finally(() => setLoading(false))
     }, [])

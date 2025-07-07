@@ -5,7 +5,7 @@ import { Module } from '@/features/module/types/module';
 import { useParams, useRouter } from 'next/navigation';
 import React, { useEffect, useState } from 'react'
 
-export default function moduleEdit() {
+export default function ModuleEdit() {
     const router = useRouter();
     const { id } = useParams();
     const [module, setModule] = useState<Module | null>(null);
@@ -18,6 +18,7 @@ export default function moduleEdit() {
 
     return (
         <>
+            <h2>Modul Düzenleme</h2>
             {module && (
                 <ModuleForm initialData={module} onSuccess={
                     () => {

@@ -7,6 +7,7 @@ export default function ModuleAdd() {
 
     return (
         <>
+            <h2>Modul Ekleme Sayfası</h2>
             <ModuleForm onSuccess={() => {
                 console.log("Module eklendi")
                 router.push('/admin/modules')

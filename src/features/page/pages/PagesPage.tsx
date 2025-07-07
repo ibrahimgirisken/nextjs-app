@@ -1,12 +1,12 @@
 'use client';
 
+import { usePagesByLang } from '../hooks/usePages';
 import { Row, Col, Card } from 'react-bootstrap';
-import { getUseTranslationsSafe } from '@/i18n/getUseTranslationsSafe';
-import { usePageByLang } from '../hooks/usePages';
 import { Page } from '../types/page';
+import { getUseTranslationsSafe } from '@/i18n/getUseTranslationsSafe';
 
 export default function UXPage({ locale }: { locale: string }) {
-    const { data: products, isLoading, error } = usePageByLang(locale);
+    const { data: products, isLoading, error } = usePagesByLang(locale);
     const t = getUseTranslationsSafe();
 
     if (isLoading) return <div>Loading...</div>;
@@ -14,7 +14,7 @@ export default function UXPage({ locale }: { locale: string }) {
 
     return (
         <>
-            <h1 className="text-2xl font-semibold mb-4">{t('other.productTitle')}</h1>
+            <h1 className="text-2xl font-semibold mb-4">{t('other.pageTitle')}</h1>
             <Row xs={1} md={3} className="g-4">
                 {products?.map((page: Page) => {
                     const translation = page.pageTranslations.find((t) =>

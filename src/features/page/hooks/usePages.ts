@@ -3,6 +3,7 @@ import { pageService } from '../api/pageService';
 
 export const {
   useAll: usePages,
-  useByLang: usePageByLang,
+  useByLang: usePagesByLang,
+  useCreate: useCreatePage,
   useUpdate: useUpdatePage,
 } = createQueryHooks('pages', pageService);

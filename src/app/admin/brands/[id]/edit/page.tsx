@@ -1,5 +1,5 @@
 'use client'
-import { getBrandById } from '@/features/brand/api/brandService'
+import { brandService } from '@/features/brand/api/brandService'
 import BrandForm from '@/features/brand/components/BrandForm'
 import { Brand } from '@/features/brand/types/brand'
 import { useParams, useRouter } from 'next/navigation'
@@ -12,7 +12,7 @@ export default function BrandEdit() {
 
     useEffect(() => {
         if (id) {
-            getBrandById(id as string).then(setBrands)
+            brandService.getById(id as string).then(setBrands)
         }
     }, [id])
 

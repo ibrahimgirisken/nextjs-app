@@ -1,5 +1,5 @@
 'use client'
-import { getBrands } from '@/features/brand/api/brandService';
+import { brandService } from '@/features/brand/api/brandService';
 import { Brand } from '@/features/brand/types/brand';
 import Link from 'next/link';
 import React, { useEffect, useState } from 'react'
@@ -10,7 +10,7 @@ export default function BrandList() {
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
-        getBrands()
+        brandService.getAll()
             .then(setBrands)
             .finally(() => setLoading(false));
     }, [])

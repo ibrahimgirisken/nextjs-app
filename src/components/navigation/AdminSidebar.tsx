@@ -16,12 +16,14 @@ export default function ResponsiveSidebar() {
   const productsPath = `/admin/products`;
   const categoriesPath = `/admin/categories`;
   const pagesPath = `/admin/pages`;
+  const brandsPath = `/admin/brands`;
 
   const links = [
     { href: dashboardPath, label: `Yönetim Paneli` },
     { href: productsPath, label: `Ürünler` },
     { href: categoriesPath, label: `Kategoriler` },
-    { href: pagesPath, label: `Sayfalar` }
+    { href: pagesPath, label: `Sayfalar` },
+    { href: brandsPath, label: `Markalar` }
   ]
 
   return (

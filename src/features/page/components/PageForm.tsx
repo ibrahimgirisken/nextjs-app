@@ -22,7 +22,7 @@ export default function PageForm({ initialData, moduleList, onSuccess }: PageFor
         image3: '',
         order: 1,
         status: true,
-        modelIds: '',
+        moduleIds: '',
         pageTranslations: [
             {
                 langCode: 'tr',
@@ -31,7 +31,7 @@ export default function PageForm({ initialData, moduleList, onSuccess }: PageFor
                 pageTitle: '',
                 brief: '',
                 metaDescription: '',
-                content: ''
+                content: '',
             },
             {
                 langCode: 'en',
@@ -40,7 +40,7 @@ export default function PageForm({ initialData, moduleList, onSuccess }: PageFor
                 pageTitle: '',
                 brief: '',
                 metaDescription: '',
-                content: ''
+                content: '',
             },
             {
                 langCode: 'de',
@@ -49,7 +49,7 @@ export default function PageForm({ initialData, moduleList, onSuccess }: PageFor
                 pageTitle: '',
                 brief: '',
                 metaDescription: '',
-                content: ''
+                content: '',
             }
         ]
     })
@@ -81,7 +81,7 @@ export default function PageForm({ initialData, moduleList, onSuccess }: PageFor
 
             return {
                 ...prev,
-                productTranslations: updatedTranslations,
+                pageTranslations: updatedTranslations,
             }
         })
     }
@@ -145,7 +145,7 @@ export default function PageForm({ initialData, moduleList, onSuccess }: PageFor
                 <Form.Label>Moduller</Form.Label>
                 <Form.Select
                     name="moduleIds"
-                    value={formData.modelIds ?? ''}
+                    value={formData.moduleIds ?? ''}
                     onChange={handleChange}>
                     <option value="">Seçiniz</option>
                     {moduleList.map((module) => (
@@ -161,12 +161,22 @@ export default function PageForm({ initialData, moduleList, onSuccess }: PageFor
                 {formData.pageTranslations.map((translation, index) => (
                     <Tab key={translation.langCode} eventKey={translation.langCode} title={translation.langCode.toUpperCase()}>
                         <Form.Group className="mb-3">
-                            <Form.Label>Ad</Form.Label>
+                            <Form.Label>Başlık</Form.Label>
                             <Form.Control
                                 type="text"
                                 name="title"
                                 value={translation.title}
                                 onChange={(e) => handleTranslationChange(index, 'title', e.target.value)}
+                            />
+                        </Form.Group>
+
+                        <Form.Group className="mb-3">
+                            <Form.Label>Sayfa Başlık</Form.Label>
+                            <Form.Control
+                                type="text"
+                                name="pageTitle"
+                                value={translation.pageTitle}
+                                onChange={(e) => handleTranslationChange(index, 'pageTitle', e.target.value)}
                             />
                         </Form.Group>
 
@@ -177,16 +187,6 @@ export default function PageForm({ initialData, moduleList, onSuccess }: PageFor
                                 name="url"
                                 value={translation.url}
                                 onChange={(e) => handleTranslationChange(index, 'url', e.target.value)}
-                            />
-                        </Form.Group>
-
-                        <Form.Group className="mb-3">
-                            <Form.Label>Başlık</Form.Label>
-                            <Form.Control
-                                type="text"
-                                name="pageTitle"
-                                value={translation.pageTitle}
-                                onChange={(e) => handleTranslationChange(index, 'pageTitle', e.target.value)}
                             />
                         </Form.Group>
 

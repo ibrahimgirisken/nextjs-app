@@ -15,6 +15,6 @@ export interface Page {
   image3: string;
   order: number;
   status: boolean;
-  modelIds: '';
+  moduleIds: string;
   pageTranslations: PageTranslation[];
 }

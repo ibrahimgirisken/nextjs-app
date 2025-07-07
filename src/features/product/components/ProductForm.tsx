@@ -1,12 +1,12 @@
 'use client'
 import { useEffect, useState } from 'react'
-import { Form, Button, Row, Col, Tabs, Tab } from 'react-bootstrap'
 import { Product } from '../types/product'
+import { reviseTheText } from '@/lib/reviseTheText'
+import { productService } from '../api/productService'
+import { Form, Button, Row, Col, Tabs, Tab } from 'react-bootstrap'
 import { Category } from '@/features/category/types/category'
 import { Brand } from '@/features/brand/types/brand'
 import ImageUpload from '@/shared/imageUpload'
-import { reviseTheText } from '@/lib/reviseTheText'
-import { productService } from '../api/productService'
 
 type ProductFormProps = {
   initialData?: Product,

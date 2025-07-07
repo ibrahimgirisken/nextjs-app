@@ -2,7 +2,7 @@
 import { moduleService } from '@/features/module/api/moduleService'
 import PageForm from '@/features/page/components/PageForm'
 import Module from 'module'
-import { useRouter } from 'next/router'
+import { useRouter } from 'next/navigation'
 import React, { useEffect, useState } from 'react'
 
 export default function PageAdd() {

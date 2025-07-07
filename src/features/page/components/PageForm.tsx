@@ -1,18 +1,19 @@
+'use client'
 import React, { useEffect, useState } from 'react'
-import Module from 'module'
 import { Page } from '../types/page'
 import { reviseTheText } from '@/lib/reviseTheText'
 import { pageService } from '../api/pageService'
 import { Button, Col, Form, Row, Tab, Tabs } from 'react-bootstrap'
 import ImageUpload from '@/shared/imageUpload'
+import { Module } from '@/features/module/types/module'
 
-type PageFormsProps = {
+type PageFormProps = {
     initialData?: Page,
     moduleList: Module[],
     onSuccess?: () => void
 }
 
-export default function PageForm({ initialData, moduleList, onSuccess }: PageFormsProps) {
+export default function PageForm({ initialData, moduleList, onSuccess }: PageFormProps) {
 
     const [formData, setFormData] = useState<Page>({
         id: '',
@@ -25,6 +26,24 @@ export default function PageForm({ initialData, moduleList, onSuccess }: PageFor
         pageTranslations: [
             {
                 langCode: 'tr',
+                title: '',
+                url: '',
+                pageTitle: '',
+                brief: '',
+                metaDescription: '',
+                content: ''
+            },
+            {
+                langCode: 'en',
+                title: '',
+                url: '',
+                pageTitle: '',
+                brief: '',
+                metaDescription: '',
+                content: ''
+            },
+            {
+                langCode: 'de',
                 title: '',
                 url: '',
                 pageTitle: '',
@@ -45,7 +64,7 @@ export default function PageForm({ initialData, moduleList, onSuccess }: PageFor
         const { name, value, type } = e.target
         setFormData((prev) => ({
             ...prev,
-            [name]: type === 'number' ? Number(value) : value
+            [name]: type === 'number' ? Number(value) : value,
         }))
     }
 
@@ -88,7 +107,7 @@ export default function PageForm({ initialData, moduleList, onSuccess }: PageFor
                 <Col>
                     <ImageUpload
                         name="image1"
-                        folder="products"
+                        folder="pages"
                         value={formData.image1}
                         onChange={(name, val) =>
                             setFormData((prev) => ({
@@ -99,7 +118,7 @@ export default function PageForm({ initialData, moduleList, onSuccess }: PageFor
                     />
                     <ImageUpload
                         name="image2"
-                        folder="products"
+                        folder="pages"
                         value={formData.image2}
                         onChange={(name, val) =>
                             setFormData((prev) => ({
@@ -110,7 +129,7 @@ export default function PageForm({ initialData, moduleList, onSuccess }: PageFor
                     />
                     <ImageUpload
                         name="image3"
-                        folder="products"
+                        folder="pages"
                         value={formData.image3}
                         onChange={(name, val) =>
                             setFormData((prev) => ({
@@ -123,15 +142,15 @@ export default function PageForm({ initialData, moduleList, onSuccess }: PageFor
             </Row>
 
             <Form.Group className="mb-3">
-                <Form.Label>Marka</Form.Label>
+                <Form.Label>Moduller</Form.Label>
                 <Form.Select
-                    name="brandId"
+                    name="moduleIds"
                     value={formData.modelIds ?? ''}
                     onChange={handleChange}>
                     <option value="">Seçiniz</option>
                     {moduleList.map((module) => (
                         <option key={module.id} value={module.id}>
-                            {module.id}
+                            {module.moduleTranslations.find(t => t.langCode === 'tr')?.name}
                         </option>
                     ))}
                 </Form.Select>
@@ -145,9 +164,9 @@ export default function PageForm({ initialData, moduleList, onSuccess }: PageFor
                             <Form.Label>Ad</Form.Label>
                             <Form.Control
                                 type="text"
-                                name="name"
+                                name="title"
                                 value={translation.title}
-                                onChange={(e) => handleTranslationChange(index, 'name', e.target.value)}
+                                onChange={(e) => handleTranslationChange(index, 'title', e.target.value)}
                             />
                         </Form.Group>
 
@@ -165,9 +184,9 @@ export default function PageForm({ initialData, moduleList, onSuccess }: PageFor
                             <Form.Label>Başlık</Form.Label>
                             <Form.Control
                                 type="text"
-                                name="title"
+                                name="pageTitle"
                                 value={translation.pageTitle}
-                                onChange={(e) => handleTranslationChange(index, 'title', e.target.value)}
+                                onChange={(e) => handleTranslationChange(index, 'pageTitle', e.target.value)}
                             />
                         </Form.Group>
 

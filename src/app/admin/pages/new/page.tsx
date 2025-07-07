@@ -1,7 +1,7 @@
 'use client'
 import { moduleService } from '@/features/module/api/moduleService'
+import { Module } from '@/features/module/types/module'
 import PageForm from '@/features/page/components/PageForm'
-import Module from 'module'
 import { useRouter } from 'next/navigation'
 import React, { useEffect, useState } from 'react'
 

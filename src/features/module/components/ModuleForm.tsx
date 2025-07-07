@@ -87,6 +87,15 @@ export default function ModuleForm({ initialData, onSuccess }: ModuleFormProps) 
         <Form onSubmit={handleSubmit} className='m-5'>
             <Row className="mb-3">
                 <Col>
+                    <Form.Group className="mb-3">
+                        <Form.Label>İçerik Tipi</Form.Label>
+                        <Form.Control
+                            type="text"
+                            name="contentType"
+                            value={formData.contentType}
+                            onChange={handleChange}
+                        />
+                    </Form.Group>
                     <ImageUpload
                         name="image1"
                         folder="modules"
@@ -150,7 +159,8 @@ export default function ModuleForm({ initialData, onSuccess }: ModuleFormProps) 
                         <Form.Group className="mb-3">
                             <Form.Label>İçerik</Form.Label>
                             <Form.Control
-                                type="text"
+                                as="textarea"
+                                rows={2}
                                 name="moduleData"
                                 value={translation.moduleData}
                                 onChange={(e) => handleTranslationChange(index, 'moduleData', e.target.value)}

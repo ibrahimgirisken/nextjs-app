@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { Brand } from '../types/brand'
-import { createBrand, updateBrand } from '../api/brandService';
+import { brandService } from '../api/brandService';
 import { Button, Form } from 'react-bootstrap'
 
 type BrandFormProps = {
@@ -34,9 +34,9 @@ export default function BrandForm({ initialData, onSuccess }: BrandFormProps) {
         e.preventDefault();
         try {
             if (formData.id) {
-                await updateBrand(formData)
+                await brandService.update(formData)
             } else {
-                await createBrand(formData);
+                await brandService.create(formData);
             }
             if (onSuccess) onSuccess()
         } catch (error) {

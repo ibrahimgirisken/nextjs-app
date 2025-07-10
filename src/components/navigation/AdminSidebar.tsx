@@ -19,6 +19,7 @@ export default function ResponsiveSidebar() {
   const brandsPath = `/admin/brands`;
   const modulesPath = `/admin/modules`;
   const bannersPath = `/admin/banners`;
+  const datasheetsPath = `/admin/datasheets`;
 
   const links = [
     { href: dashboardPath, label: `Yönetim Paneli` },
@@ -28,6 +29,7 @@ export default function ResponsiveSidebar() {
     { href: brandsPath, label: `Markalar` },
     { href: modulesPath, label: `Modüller` },
     { href: bannersPath, label: `Banner` },
+    { href: datasheetsPath, label: `Datasheet` },
   ]
 
   return (

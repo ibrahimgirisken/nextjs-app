@@ -6,7 +6,7 @@ export async function fetchMessages(locale: string): Promise<Record<string, any>
   );
   if (!res.ok) throw new Error(`Failed to fetch messages for ${locale}`);
 
-  const data = await res.json(); // gelen array
+  const data = await res.json();
 
   const flat: Record<string, string> = {};
 
@@ -16,8 +16,6 @@ export async function fetchMessages(locale: string): Promise<Record<string, any>
       flat[item.key] = translation.value;
     }
   }
-
-  // 🔧 flatten to nested
   return Object.entries(flat).reduce((acc, [key, value]) => {
     set(acc, key, value);
     return acc;

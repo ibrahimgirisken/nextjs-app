@@ -66,7 +66,7 @@ export default function BannerForm({ initialData, onSuccess }: BannerFormProps) 
 
             return {
                 ...prev,
-                productTranslations: updatedTranslations,
+                bannerTranslations: updatedTranslations,
             }
         })
     }

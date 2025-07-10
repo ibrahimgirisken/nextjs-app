@@ -5,7 +5,7 @@ import { settingService } from '../api/settingService';
 export function useUpdateSetting() {
   const queryClient = useQueryClient();
   return useMutation({
-    mutationFn: ({ data }: { data: Setting }) => settingService.updateSetting(data),
+    mutationFn: ({ data }: { data: Setting }) => settingService.update(data),
     onSuccess: () => queryClient.invalidateQueries({ queryKey: ['settings'] }),
   });
 }

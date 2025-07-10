@@ -2,11 +2,11 @@
 
 import { Row, Col, Card } from 'react-bootstrap';
 import { getUseTranslationsSafe } from '@/i18n/getUseTranslationsSafe';
-import { Datasheet } from '../types/datasheet';
-import { useDatasheetsByLang } from '../hooks/useDatasheet';
+import { Home } from '../types/home';
+import { useHomesByLang } from '../hooks/useHomes';
 
-export default function DatasheetsPage({ locale }: { locale: string }) {
-    const { data: datasheets, isLoading, error } = useDatasheetsByLang(locale);
+export default function HomePage({ locale }: { locale: string }) {
+    const { data: homes, isLoading, error } = useHomesByLang(locale);
     const t = getUseTranslationsSafe();
 
     if (isLoading) return <div>Loading...</div>;
@@ -14,20 +14,20 @@ export default function DatasheetsPage({ locale }: { locale: string }) {
 
     return (
         <>
-            <h1 className="text-2xl font-semibold mb-4">{t('other.productTitle')}</h1>
+            <h1 className="text-2xl font-semibold mb-4">{t('other.pageTitle')}</h1>
             <Row xs={1} md={3} className="g-4">
-                {datasheets?.map((datasheet: Datasheet) => {
-                    const translation = datasheet.datasheetTranslations.find((t) =>
+                {homes?.map((home: Home) => {
+                    const translation = home.homeTranslations.find((t) =>
                         t.langCode.startsWith(locale)
                     );
                     if (!translation) return null;
 
                     return (
-                        <Col key={datasheet.id}>
+                        <Col key={home.id}>
                             <Card>
                                 <Card.Body>
-                                    <Card.Title>{datasheet.code}</Card.Title>
-                                    <Card.Title>{translation.name}</Card.Title>
+                                    <Card.Title>{translation.title}</Card.Title>
+                                    <Card.Title>{translation.url}</Card.Title>
                                     <a
                                         className="btn btn-primary"
                                         href={`/${t('route.products')}/${translation.url}`}
@@ -43,4 +43,3 @@ export default function DatasheetsPage({ locale }: { locale: string }) {
         </>
     );
 }
-

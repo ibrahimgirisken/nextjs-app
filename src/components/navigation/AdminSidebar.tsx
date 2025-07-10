@@ -20,6 +20,7 @@ export default function ResponsiveSidebar() {
   const modulesPath = `/admin/modules`;
   const bannersPath = `/admin/banners`;
   const datasheetsPath = `/admin/datasheets`;
+  const homesPath = `/admin/homes`;
 
   const links = [
     { href: dashboardPath, label: `Yönetim Paneli` },
@@ -30,6 +31,7 @@ export default function ResponsiveSidebar() {
     { href: modulesPath, label: `Modüller` },
     { href: bannersPath, label: `Banner` },
     { href: datasheetsPath, label: `Datasheet` },
+    { href: homesPath, label: `Anasayfa İçerik` },
   ]
 
   return (

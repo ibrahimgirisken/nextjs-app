@@ -9,7 +9,7 @@ export interface Datasheet {
   id: string;
   code: string;
   image1: string;
-  order: string;
-  status: string;
+  order: number;
+  status: boolean;
   datasheetTranslations: DatasheetTranslation[];
 }

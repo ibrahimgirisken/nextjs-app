@@ -1,18 +1,18 @@
 'use client'
 
-import { datasheetService } from "@/features/datasheet/api/datasheetService"
-import { Datasheet } from "@/features/datasheet/types/datasheet"
+import { homeService } from "@/features/home/api/useHome"
+import { Home } from "@/features/home/types/home"
 import Link from "next/link"
 import { useEffect, useState } from "react"
 import { Button, Spinner, Table } from "react-bootstrap"
 
-export default function DatasheetList() {
-    const [datasheets, setDatasheets] = useState<Datasheet[]>([])
+export default function HomeList() {
+    const [homes, setHomes] = useState<Home[]>([])
     const [loading, setLoading] = useState(true)
 
     useEffect(() => {
-        datasheetService.getAll()
-            .then(setDatasheets)
+        homeService.getAll()
+            .then(setHomes)
             .finally(() => setLoading(false))
     }, [])
     if (loading) {
@@ -22,9 +22,9 @@ export default function DatasheetList() {
 
         <div>
             <div className="d-flex justify-content-between align-items-center mb-3">
-                <h2>Datasheet Listesi</h2>
-                <Link href="/admin/products/new">
-                    <Button variant="primary">Yeni Datasheet Ekle</Button>
+                <h2>Anasayfa İçerikleri Listesi</h2>
+                <Link href="/admin/homes/new">
+                    <Button variant="primary">Yeni Sayfa Ekle</Button>
                 </Link>
             </div>
             <div className="table-responsive">
@@ -40,17 +40,17 @@ export default function DatasheetList() {
                         </tr>
                     </thead>
                     <tbody>
-                        {datasheets.map((datasheet, index) => {
-                            const trLang = datasheet.datasheetTranslations.find(t => t.langCode === 'tr')
+                        {homes.map((home, index) => {
+                            const trLang = home.homeTranslations.find(t => t.langCode === 'tr')
                             return (
-                                <tr key={datasheet.id}>
+                                <tr key={home.id}>
                                     <td>{index + 1}</td>
-                                    <td>{datasheet.code}</td>
-                                    <td>{trLang?.name}</td>
-                                    <td>{datasheet.order}</td>
-                                    <td>{datasheet.status ? 'Aktif' : 'Pasif'}</td>
+                                    <td>{trLang?.title}</td>
+                                    <td>{trLang?.url}</td>
+                                    <td>{home.order}</td>
+                                    <td>{home.status ? 'Aktif' : 'Pasif'}</td>
                                     <td>
-                                        <Link href={`/admin/datasheets/${datasheet.id}/edit`}>
+                                        <Link href={`/admin/homes/${home.id}/edit`}>
                                             <Button variant="warning" size="sm" className="me-2">
                                                 Düzenle
                                             </Button>

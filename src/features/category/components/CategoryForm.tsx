@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 import { Button, Col, Form, Row, Tab, Tabs } from 'react-bootstrap'
 import { Category } from '../types/category'
-import { createCategory, updateCategory } from '../api/categoryService'
+import { categoryService } from '../api/categoryService'
 
 type CategoryFormProps = {
     initialData?: Category,
@@ -76,13 +76,13 @@ export default function CategoryForm({ initialData, onSuccess }: CategoryFormPro
         e.preventDefault()
         try {
             if (formData.id) {
-                await updateCategory(formData)
+                await categoryService.update(formData)
             } else {
                 const { id, ...dataToSend } = formData
                 if (!dataToSend.parentId) {
                     delete dataToSend.parentId
                 }
-                await createCategory(dataToSend)
+                await categoryService.create(dataToSend)
             }
             if (onSuccess) onSuccess()
         } catch (error) {

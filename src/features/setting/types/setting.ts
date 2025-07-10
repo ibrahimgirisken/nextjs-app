@@ -1,4 +1,4 @@
-export interface SettingTranslations {
+export interface SettingTranslation {
   langCode: string;
   title: string;
   metaDescription: string;
@@ -23,5 +23,5 @@ export interface Setting {
   googleSiteVerification: string;
   googleMaps: string;
   status: boolean;
-  settingTranslations: SettingTranslations[];
+  settingTranslations: SettingTranslation[];
 }

@@ -2,9 +2,9 @@
 
 import { useEffect, useState } from "react"
 import { Setting } from "../types/setting"
-import { updateSetting } from "../api/settingService"
-import { Button, Col, Form, Row } from "react-bootstrap"
+import { Button, Col, Form, Row, Tab, Tabs } from "react-bootstrap"
 import ImageUpload from "@/shared/imageUpload"
+import { settingService } from "../api/settingService"
 
 type SettingFromProps = {
     initialData?: Setting,
@@ -83,11 +83,12 @@ export default function SettingForm({ initialData, onSuccess }: SettingFromProps
         e.preventDefault()
         try {
             if (formData.id) {
-                await updateSetting(formData)
+                await settingService.update(formData)
+            } else {
+                const { id, ...dataToSend } = formData
+                await settingService.create(dataToSend)
             }
-            if (onSuccess) {
-                onSuccess()
-            }
+            if (onSuccess) onSuccess()
         } catch (error) {
             console.log(error)
         }
@@ -116,7 +117,7 @@ export default function SettingForm({ initialData, onSuccess }: SettingFromProps
                                 [name]: val,
                             }))
                         }} />
-                    <Form.Group>
+                    <Form.Group className="mb-3">
                         <Form.Label>Telefon</Form.Label>
                         <Form.Control
                             type="text"
@@ -125,7 +126,7 @@ export default function SettingForm({ initialData, onSuccess }: SettingFromProps
                             onChange={handleChange}
                         />
                     </Form.Group>
-                    <Form.Group>
+                    <Form.Group className="mb-3">
                         <Form.Label>E-Posta</Form.Label>
                         <Form.Control
                             type="text"
@@ -134,7 +135,7 @@ export default function SettingForm({ initialData, onSuccess }: SettingFromProps
                             onChange={handleChange}
                         />
                     </Form.Group>
-                    <Form.Group>
+                    <Form.Group className="mb-3">
                         <Form.Label>Adres</Form.Label>
                         <Form.Control
                             type="text"
@@ -142,7 +143,8 @@ export default function SettingForm({ initialData, onSuccess }: SettingFromProps
                             value={formData.address}
                             onChange={handleChange}
                         />
-                    </Form.Group><Form.Group>
+                    </Form.Group>
+                    <Form.Group className="mb-3">
                         <Form.Label>Facebook</Form.Label>
                         <Form.Control
                             type="text"
@@ -151,7 +153,7 @@ export default function SettingForm({ initialData, onSuccess }: SettingFromProps
                             onChange={handleChange}
                         />
                     </Form.Group>
-                    <Form.Group>
+                    <Form.Group className="mb-3">
                         <Form.Label>Twitter</Form.Label>
                         <Form.Control
                             type="text"
@@ -160,7 +162,7 @@ export default function SettingForm({ initialData, onSuccess }: SettingFromProps
                             onChange={handleChange}
                         />
                     </Form.Group>
-                    <Form.Group>
+                    <Form.Group className="mb-3">
                         <Form.Label>İnstagram</Form.Label>
                         <Form.Control
                             type="text"
@@ -169,7 +171,7 @@ export default function SettingForm({ initialData, onSuccess }: SettingFromProps
                             onChange={handleChange}
                         />
                     </Form.Group>
-                    <Form.Group>
+                    <Form.Group className="mb-3">
                         <Form.Label>linkedIn</Form.Label>
                         <Form.Control
                             type="text"
@@ -178,7 +180,7 @@ export default function SettingForm({ initialData, onSuccess }: SettingFromProps
                             onChange={handleChange}
                         />
                     </Form.Group>
-                    <Form.Group>
+                    <Form.Group className="mb-3">
                         <Form.Label>Youtube</Form.Label>
                         <Form.Control
                             type="text"
@@ -187,7 +189,7 @@ export default function SettingForm({ initialData, onSuccess }: SettingFromProps
                             onChange={handleChange}
                         />
                     </Form.Group>
-                    <Form.Group>
+                    <Form.Group className="mb-3">
                         <Form.Label>Google Plus</Form.Label>
                         <Form.Control
                             type="text"
@@ -196,7 +198,7 @@ export default function SettingForm({ initialData, onSuccess }: SettingFromProps
                             onChange={handleChange}
                         />
                     </Form.Group>
-                    <Form.Group>
+                    <Form.Group className="mb-3">
                         <Form.Label>Google Analytics</Form.Label>
                         <Form.Control
                             type="text"
@@ -205,7 +207,7 @@ export default function SettingForm({ initialData, onSuccess }: SettingFromProps
                             onChange={handleChange}
                         />
                     </Form.Group>
-                    <Form.Group>
+                    <Form.Group className="mb-3">
                         <Form.Label>Google Recaptcha</Form.Label>
                         <Form.Control
                             type="text"
@@ -214,7 +216,7 @@ export default function SettingForm({ initialData, onSuccess }: SettingFromProps
                             onChange={handleChange}
                         />
                     </Form.Group>
-                    <Form.Group>
+                    <Form.Group className="mb-3">
                         <Form.Label>Google Tag Manager</Form.Label>
                         <Form.Control
                             type="text"
@@ -223,7 +225,7 @@ export default function SettingForm({ initialData, onSuccess }: SettingFromProps
                             onChange={handleChange}
                         />
                     </Form.Group>
-                    <Form.Group>
+                    <Form.Group className="mb-3">
                         <Form.Label>Google Site Verification</Form.Label>
                         <Form.Control
                             type="text"
@@ -232,7 +234,7 @@ export default function SettingForm({ initialData, onSuccess }: SettingFromProps
                             onChange={handleChange}
                         />
                     </Form.Group>
-                    <Form.Group>
+                    <Form.Group className="mb-3">
                         <Form.Label>Google Maps</Form.Label>
                         <Form.Control
                             type="text"
@@ -241,6 +243,33 @@ export default function SettingForm({ initialData, onSuccess }: SettingFromProps
                             onChange={handleChange}
                         />
                     </Form.Group>
+
+                    <Tabs defaultActiveKey="tr" className="mb-3">
+                        {formData.settingTranslations.map((translation, index) => (
+                            <Tab key={translation.langCode} eventKey={translation.langCode} title={translation.langCode.toUpperCase()}>
+                                <Form.Group className="mb-3">
+                                    <Form.Label>Meta Title</Form.Label>
+                                    <Form.Control
+                                        type="text"
+                                        name="title"
+                                        value={translation.title}
+                                        onChange={(e) => handleTranslationChange(index, 'title', e.target.value)}
+                                    />
+                                </Form.Group>
+
+                                <Form.Group className="mb-3">
+                                    <Form.Label>Meta Description</Form.Label>
+                                    <Form.Control
+                                        type="text"
+                                        name="metaDescription"
+                                        value={translation.metaDescription}
+                                        onChange={(e) => handleTranslationChange(index, 'metaDescription', e.target.value)}
+                                    />
+                                </Form.Group>
+                            </Tab>
+                        ))}
+                    </Tabs>
+
                     <Form.Group>
                         <Form.Check
                             type="checkbox"

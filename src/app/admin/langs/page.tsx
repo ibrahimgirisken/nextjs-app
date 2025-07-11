@@ -32,7 +32,7 @@ export default function LangList() {
                     <thead>
                         <tr>
                             <th>#</th>
-                            <th>Görsel</th>
+                            <th>Dil Kodu</th>
                             <th>Başlık</th>
                             <th>İşlemler</th>
                         </tr>
@@ -42,7 +42,7 @@ export default function LangList() {
                             return (
                                 <tr key={lang.id}>
                                     <td>{index + 1}</td>
-                                    <td>{lang.Image}</td>
+                                    <td>{lang.langCode}</td>
                                     <td>{lang.title}</td>
                                     <td>
                                         <Link href={`/admin/langs/${lang.id}/edit`}>

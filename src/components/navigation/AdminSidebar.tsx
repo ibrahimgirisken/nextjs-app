@@ -24,6 +24,7 @@ export default function ResponsiveSidebar() {
   const settingsPath = `/admin/settings/AAAAAAAA-AAAA-AAAA-AAAA-AAAAAAAAAAAA/edit`;
   const langsPath = `/admin/langs`;
   const translationsPath = `/admin/translations`;
+  const usersPath = `/admin/users`;
 
   const links = [
     { href: dashboardPath, label: `Yönetim Paneli` },
@@ -38,6 +39,7 @@ export default function ResponsiveSidebar() {
     { href: settingsPath, label: `Genel Ayarlar` },
     { href: langsPath, label: `Dil Ayarları` },
     { href: translationsPath, label: `Dil İçerikleri` },
+    { href: usersPath, label: `Kullanıcılar` },
   ]
 
   return (

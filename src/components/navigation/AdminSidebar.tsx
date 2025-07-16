@@ -25,6 +25,7 @@ export default function ResponsiveSidebar() {
   const langsPath = `/admin/langs`;
   const translationsPath = `/admin/translations`;
   const usersPath = `/admin/users`;
+  const permissionsPath = `/admin/permissions`;
 
   const links = [
     { href: dashboardPath, label: `Yönetim Paneli` },
@@ -40,6 +41,7 @@ export default function ResponsiveSidebar() {
     { href: langsPath, label: `Dil Ayarları` },
     { href: translationsPath, label: `Dil İçerikleri` },
     { href: usersPath, label: `Kullanıcılar` },
+    { href: permissionsPath, label: `Kullanıcı Yetki İzinleri` },
   ]
 
   return (

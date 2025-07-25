@@ -23,7 +23,16 @@ export default function Page() {
         router.push('/admin');
       } else {
         const data = await res.json();
-        setError(data?.error || 'Giriş başarısız');
+
+        let errorMessage = 'Giriş başarısız';
+
+        try {
+          const parsed = typeof data.error === 'string' ? JSON.parse(data.error) : data.error;
+          errorMessage = parsed?.message || errorMessage;
+        } catch (error) {
+
+        }
+        setError(errorMessage);
       }
     } catch {
       setError('Sunucuya bağlanılamadı');

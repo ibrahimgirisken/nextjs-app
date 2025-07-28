@@ -11,14 +11,32 @@ export async function POST(req: NextRequest) {
       body: JSON.stringify(body),
     });
 
+    const contentType = loginRes.headers.get('content-type');
+
     if (!loginRes.ok) {
-      const err = await loginRes.text();
-      return NextResponse.json({ error: err || 'Invalid login' }, { status: 401 });
+      let errorMessage = 'Invalid login';
+      try {
+        if (contentType?.includes('application/json')) {
+          const errData = await loginRes.json();
+          errorMessage = errData?.message || errorMessage;
+        } else {
+          errorMessage = await loginRes.text();
+        }
+      } catch {
+        // Yutulabilir
+      }
+
+      return NextResponse.json({ error: errorMessage }, { status: 401 });
     }
 
     const data = await loginRes.json();
 
+    if (!data.token?.accessToken) {
+      return NextResponse.json({ error: 'Token alınamadı' }, { status: 500 });
+    }
+
     const response = NextResponse.json({ message: 'Login successful' });
+
     response.cookies.set('accessToken', data.token.accessToken, {
       httpOnly: true,
       secure: process.env.NODE_ENV === 'production',
@@ -28,7 +46,8 @@ export async function POST(req: NextRequest) {
     });
 
     return response;
-  } catch (err) {
-    return NextResponse.json({ error: 'Internal Server Error' }, { status: 500 });
+  } catch (err: any) {
+    console.error('Login API hatası:', err);
+    return NextResponse.json({ error: 'Sunucu hatası' }, { status: 500 });
   }
 }

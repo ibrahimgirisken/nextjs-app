@@ -1,9 +1,10 @@
+import { AxiosInstance } from 'axios';
 import api from './axiosClient';
 
 type EntityWithId = { id: string };
 type UpdateDto<T extends EntityWithId> = Partial<Omit<T, 'id'>> & { id: string };
 
-export function createApiService<T extends EntityWithId>(basePath: string) {
+export function createApiService<T extends EntityWithId>(api: AxiosInstance, basePath: string) {
   return {
     getAll: (): Promise<T[]> =>
       api.get(`/${basePath}/all?IncludeAllLanguages=true`).then((res) => res.data),

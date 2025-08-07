@@ -5,7 +5,7 @@ export async function POST(req: NextRequest) {
   try {
     const body = await req.json();
 
-    const loginRes = await fetch('http://localhost:5070/api/Users/Login', {
+    const loginRes = await fetch('http://localhost:5070/api/Auth/Login', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(body),

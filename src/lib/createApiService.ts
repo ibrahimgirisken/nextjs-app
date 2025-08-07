@@ -1,5 +1,4 @@
 import { AxiosInstance } from 'axios';
-import api from './axiosClient';
 
 type EntityWithId = { id: string };
 type UpdateDto<T extends EntityWithId> = Partial<Omit<T, 'id'>> & { id: string };

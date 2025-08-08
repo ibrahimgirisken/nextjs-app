@@ -1,8 +1,18 @@
 import { createQueryHooks } from '@/lib/createQueryHooks';
-import { productService } from '../api/productService';
-export const {
+import { getProductService } from '../api/productService';
+import { useMemo } from 'react';
+
+// Token'ı localStorage'dan dinamik al
+export function useProductHooks() {
+  const productService = useMemo(() => getProductService(), []);
+  return useMemo(() => createQueryHooks('products', productService), [productService]);
+}
+
+// Kullanım örneği:
+const {
   useAll: useProducts,
+  useById: useProductById,
   useByLang: useProductsByLang,
-  useCreate: useCreteProduct,
+  useCreate: useCreateProduct,
   useUpdate: useUpdateProduct,
-} = createQueryHooks('products', productService);
+} = useProductHooks();

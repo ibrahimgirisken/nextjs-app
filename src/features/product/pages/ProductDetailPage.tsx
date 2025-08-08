@@ -3,7 +3,7 @@
 import { useEffect, useState } from 'react';
 import { Container } from 'react-bootstrap';
 import { Product } from '@/features/product/types/product';
-import { productService } from '../api/productService';
+import { getProductService } from '../api/productService';
 
 export default function ProductDetailPage({ slug, locale }: { slug: string; locale: string }) {
 
@@ -12,7 +12,8 @@ export default function ProductDetailPage({ slug, locale }: { slug: string; loca
 
   useEffect(() => {
     if (!slug || !locale) return;
-
+    const token = typeof window !== "undefined" ? localStorage.getItem("accessToken") || "" : "";
+    const productService = getProductService(token);
     productService.getByUrlAndLang(slug, locale)
       .then(setProduct)
       .catch((err) => {

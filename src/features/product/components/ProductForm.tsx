@@ -2,11 +2,11 @@
 import { useEffect, useState } from 'react'
 import { Product } from '../types/product'
 import { reviseTheText } from '@/lib/reviseTheText'
-import { productService } from '../api/productService'
 import { Form, Button, Row, Col, Tabs, Tab } from 'react-bootstrap'
 import { Category } from '@/features/category/types/category'
 import { Brand } from '@/features/brand/types/brand'
 import ImageUpload from '@/shared/imageUpload'
+import { getProductService } from '../api/productService'
 
 type ProductFormProps = {
   initialData?: Product,
@@ -97,19 +97,20 @@ export default function ProductForm({ initialData, categoryList, brandList, onSu
   }
 
   const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault()
+    e.preventDefault();
     try {
+      const productService = getProductService();
       if (formData.id) {
-        await productService.update(formData)
+        await productService.update(formData);
       } else {
-        const { id, ...dataToSend } = formData
-        await productService.create(dataToSend)
+        const { id, ...dataToSend } = formData;
+        await productService.create(dataToSend);
       }
-      if (onSuccess) onSuccess()
+      if (onSuccess) onSuccess();
     } catch (error) {
-      console.log(error)
+      console.log(error);
     }
-  }
+  };
 
   return (
     <Form onSubmit={handleSubmit} className='m-5'>

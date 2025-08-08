@@ -1,7 +1,8 @@
 import { createApiService } from '@/lib/createApiService';
-import { Product } from '../types/product';
 import { createServerApi } from '@/lib/serverApi';
-const token = typeof window !== 'undefined' ? localStorage.getItem('accessToken') || '' : '';
+import { Product } from '../types/product';
 
-const apiInstance = createServerApi(token); // token’lı axios
-export const productService = createApiService<Product>(apiInstance, 'products');
+export function getProductService() {
+  const apiInstance = createServerApi();
+  return createApiService<Product>(apiInstance, 'products');
+}

@@ -1,19 +1,11 @@
 import axios from 'axios';
 
-export const createServerApi = (token: string) => {
-  const instance = axios.create({
+export const createServerApi = () => {
+  return axios.create({
     baseURL: 'http://localhost:5070/api',
+    withCredentials: true,
     headers: {
       'Content-Type': 'application/json',
     },
   });
-
-  instance.interceptors.request.use((config) => {
-    if (token && token.trim() !== '') {
-      config.headers['Authorization'] = `Bearer ${token}`;
-    }
-    return config;
-  });
-
-  return instance;
 };

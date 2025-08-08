@@ -4,7 +4,7 @@ import { reviseTheText } from '@/lib/reviseTheText'
 import { Button, Col, Form, Row, Tab, Tabs } from 'react-bootstrap'
 import ImageUpload from '@/shared/imageUpload'
 import { Home } from '../types/home'
-import { homeService } from '../api/useHome'
+import { homeService } from '../api/homeService'
 
 type HomeFormProps = {
     initialData?: Home,

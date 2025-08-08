@@ -1,4 +1,7 @@
 import { createApiService } from '@/lib/createApiService';
+import { createServerApi } from '@/lib/serverApi';
 import { TranslateKey } from '../types/translate';
+const token = typeof window !== 'undefined' ? localStorage.getItem('accessToken') || '' : '';
 
-export const translateService = createApiService<TranslateKey>('translations');
+const apiInstance = createServerApi(token); // token’lı axios
+export const translateService = createApiService<TranslateKey>(apiInstance, 'translations');

@@ -1,5 +1,5 @@
 'use client'
-import { homeService } from "@/features/home/api/useHome"
+import { homeService } from "@/features/home/api/homeService"
 import HomeForm from "@/features/home/components/HomeForm"
 import { Home } from "@/features/home/types/home"
 import { useParams, useRouter } from "next/navigation"

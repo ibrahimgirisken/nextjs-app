@@ -1,6 +1,6 @@
 'use client'
 
-import { homeService } from "@/features/home/api/useHome"
+import { homeService } from "@/features/home/api/homeService"
 import { Home } from "@/features/home/types/home"
 import Link from "next/link"
 import { useEffect, useState } from "react"

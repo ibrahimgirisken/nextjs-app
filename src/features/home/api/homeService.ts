@@ -1,7 +1,7 @@
 import { createApiService } from '@/lib/createApiService';
 import { createServerApi } from '@/lib/serverApi';
-import { Lang } from '../types/lang';
+import { Home } from '../types/home';
 const token = typeof window !== 'undefined' ? localStorage.getItem('accessToken') || '' : '';
 
 const apiInstance = createServerApi(token); // token’lı axios
-export const langService = createApiService<Lang>(apiInstance, 'langs');
+export const homeService = createApiService<Home>(apiInstance, 'homes');

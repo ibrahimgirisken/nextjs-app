@@ -3,7 +3,7 @@
 import { useEffect, useState } from 'react';
 import { Container } from 'react-bootstrap';
 import { Home } from '../types/home';
-import { homeService } from '../api/useHome';
+import { homeService } from '../api/homeService';
 
 export default function HomeDetailPage({ slug, locale }: { slug: string; locale: string }) {
 

@@ -1,6 +1,6 @@
 'use client'
 
-import { getProductService } from "@/features/product/api/productService"
+import { productService } from "@/features/product/api/productService"
 import { Product } from "@/features/product/types/product"
 import Link from "next/link"
 import { useEffect, useState } from "react"
@@ -11,8 +11,6 @@ export default function ProductList() {
     const [loading, setLoading] = useState(true)
 
     useEffect(() => {
-        const productService = getProductService();
-
         productService.getAll()
             .then(setProducts)
             .finally(() => setLoading(false))
@@ -21,8 +19,7 @@ export default function ProductList() {
         return <Spinner animation="border" />
     }
     return (
-
-        <div>
+        <>
             <div className="d-flex justify-content-between align-items-center mb-3">
                 <h2>Ürün Listesi</h2>
                 <Link href="/admin/products/new">
@@ -64,6 +61,6 @@ export default function ProductList() {
                     </tbody>
                 </Table>
             </div>
-        </div>
+        </>
     )
 }

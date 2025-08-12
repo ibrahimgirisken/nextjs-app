@@ -2,10 +2,8 @@ import axios from 'axios';
 
 export const createServerApi = () => {
   return axios.create({
-    baseURL: 'http://localhost:5070/api',
+    baseURL: '/api/proxy', // tüm çağrılar önce Next.js’e gelir
     withCredentials: true,
-    headers: {
-      'Content-Type': 'application/json',
-    },
+    headers: { 'Content-Type': 'application/json' },
   });
 };

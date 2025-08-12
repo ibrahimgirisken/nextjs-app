@@ -3,7 +3,7 @@ import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 export default function UXHeader() {
   const logout = async () => {
-    const res = await fetch('/api/logout', {
+    const res = await fetch('/api/auth/logout', {
       method: 'POST',
       credentials: 'include',
     });

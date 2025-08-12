@@ -6,7 +6,7 @@ import { Form, Button, Row, Col, Tabs, Tab } from 'react-bootstrap'
 import { Category } from '@/features/category/types/category'
 import { Brand } from '@/features/brand/types/brand'
 import ImageUpload from '@/shared/imageUpload'
-import { getProductService } from '../api/productService'
+import { productService } from '../api/productService'
 
 type ProductFormProps = {
   initialData?: Product,
@@ -99,7 +99,6 @@ export default function ProductForm({ initialData, categoryList, brandList, onSu
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
-      const productService = getProductService();
       if (formData.id) {
         await productService.update(formData);
       } else {

@@ -1,28 +1,34 @@
 'use client';
-import { getProductByUrlAndLang } from '@/features/product/api/productService';
-import { Product } from '@/features/product/types/product';
+import { Category } from '@/features/category/types/category';
+import { categoryService } from '@/features/category/api/categoryService';
 import React, { useEffect } from 'react'
 import { Container } from 'react-bootstrap';
 
-export default function productDetail({ params }: { params: { locale: string, slug: string } }) {
+export default function CategoryDetailPage({ params }: { params: { locale: string, slug: string } }) {
     const { locale, slug } = params;
-    const [product, setProduct] = React.useState<Product>();
+    const [category, setCategory] = React.useState<Category>();
     const [loading, setLoading] = React.useState(true);
 
     useEffect(() => {
-        getProductByUrlAndLang(slug as string, locale as string)
-            .then(setProduct)
+        categoryService.getByUrlAndLang(slug as string, locale as string)
+            .then(setCategory)
             .finally(() => setLoading(false));
-    });
+    }, [slug, locale]);
+
+    if (loading) return <div>Yükleniyor...</div>;
+    if (!category) return <div>Kategori bulunamadı.</div>;
+
+    const translation = category.categoryTranslations.find(t => t.langCode.startsWith(locale));
+
     return (
         <>
-            <h1>{product?.code}</h1>
+            <h1>{category?.id}</h1>
             <Container>
-                {product ? product.productTranslations.map((translation) => (
+                {category ? category.categoryTranslations.map((translation) => (
                     <div key={translation.langCode}>
                         <h2>{translation.brief}</h2>
                         <p>{translation.brief}</p>
-                        <p>{translation.content}</p>
+                        <p>{translation.name}</p>
                     </div>
                 )) : null}
             </Container>

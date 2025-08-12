@@ -1,10 +1,8 @@
-import { getTranslations } from 'next-intl/server';
 import resolveRouteKey from '@/utils/resolveRouteKey';
 
 import ProductList from '@/features/product/pages/ProductsPage';
 import ProductDetail from '@/features/product/pages/ProductDetailPage';
 import { getSafeTranslations } from '@/i18n/getTranslationsSafe';
-// ... diğer componentler
 
 export default async function UXRouter(props: { params: { locale: string; slug?: string[] } }) {
   const { params } = props;
@@ -18,14 +16,13 @@ export default async function UXRouter(props: { params: { locale: string; slug?:
     projects: await t('route.projects'),
   };
 
-  const routeSegment = slug[0]; // örn. 'urunler'
-  const detailSegment = slug[1]; // örn. 'akilli-panel'
+  const routeSegment = slug[0];
+  const detailSegment = slug[1]
 
   const routeKey = resolveRouteKey(routeSegment, translatedRoutes);
 
   if (!routeKey) return <div>404 Not Found</div>;
 
-  // Detay sayfası
   if (detailSegment) {
     switch (routeKey) {
       case 'products':
@@ -37,7 +34,6 @@ export default async function UXRouter(props: { params: { locale: string; slug?:
     }
   }
 
-  // Liste sayfası
   switch (routeKey) {
     case 'products':
       return <ProductList locale={locale} />;

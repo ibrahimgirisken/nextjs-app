@@ -1,5 +1,6 @@
 'use client';
 import capitalizeFirstLetter from '@/utils/capitalizeFirstLetter';
+import { slugify } from '@/utils/slugify';
 import { useLocale } from 'next-intl';
 import Container from 'react-bootstrap/Container';
 import Nav from 'react-bootstrap/Nav';
@@ -25,8 +26,11 @@ export default function UXHeader() {
                   title={capitalizeFirstLetter(t('route.products'))}
                   menuVariant="dark"
                 >
-                  <NavDropdown.Item href={`/${locale}/${t('route.products')}`}>
+                  <NavDropdown.Item href={`/${locale}/${slugify(t('route.products'))}`}>
                     {capitalizeFirstLetter(t('route.products'))}
+                  </NavDropdown.Item>
+                  <NavDropdown.Item href={`/${locale}/${t('route.categories')}`}>
+                    {capitalizeFirstLetter(t('route.categories'))}
                   </NavDropdown.Item>
                   <NavDropdown.Item href={`/${locale}/${t('route.projects')}`}>{capitalizeFirstLetter(t('route.projects'))}</NavDropdown.Item>
                   <NavDropdown.Item href="#action/3.3">Something</NavDropdown.Item>

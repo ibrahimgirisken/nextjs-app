@@ -1,5 +1,5 @@
-// src/app/api/proxy/[...path]/route.ts
 import { cookies, headers } from 'next/headers';
+import { NextResponse } from 'next/server';
 
 const BACKEND_BASE = process.env.BACKEND_API_URL ?? 'http://localhost:5070/api';
 
@@ -24,6 +24,19 @@ async function forward(req: Request, method: string, path: string[]) {
     headers: h,
     body: body ? Buffer.from(body) : undefined,
   });
+
+  // 401 ise cookie'yi temizle ve login'e yönlendir
+  if (resp.status === 401) {
+    const res = NextResponse.redirect(new URL('/login', req.url));
+    res.cookies.set('accessToken', '', {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === 'production',
+      sameSite: 'strict', // login'de kullandığın ayarla aynı olmalı
+      path: '/',
+      maxAge: 0,
+    });
+    return res;
+  }
 
   const respHeaders = new Headers(resp.headers);
   return new Response(await resp.arrayBuffer(), {

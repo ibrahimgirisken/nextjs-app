@@ -1,22 +1,16 @@
 'use client';
-import { moduleService } from '@/features/module/api/moduleService';
-import { Module } from '@/features/module/types/module'
+import { useModules } from '@/features/module/hooks/useModules';
 import Link from 'next/link';
-import React, { useEffect, useState } from 'react'
 import { Button, Spinner, Table } from 'react-bootstrap';
 
 export default function ModuleList() {
-    const [modules, setModules] = useState<Module[]>([]);
-    const [loading, setLoading] = useState(true);
+    const { data: modules = [], isLoading, error } = useModules();
 
-    useEffect(() => {
-        moduleService.getAll()
-            .then(setModules)
-            .finally(() => setLoading(false));
-    });
-
-    if (loading) {
-        return <Spinner animation='border' />
+    if (isLoading) {
+        return <Spinner animation="border" />
+    }
+    if (error) {
+        return <p>Veriler yüklenirken bir hata oluştu.</p>;
     }
     return (
         <>

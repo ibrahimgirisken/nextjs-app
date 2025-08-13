@@ -6,4 +6,5 @@ export const {
   useByLang: useCategoryByLang,
   useCreate: useCreateCategory,
   useUpdate: useUpdateCategory,
+  useById: useCategoryById,
 } = createQueryHooks('categories', categoryService);

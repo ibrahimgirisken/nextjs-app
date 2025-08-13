@@ -1,24 +1,16 @@
 'use client'
-import { langService } from '@/features/lang/hooks/langService';
-import { Lang } from '@/features/lang/types/lang';
+import { useLangs } from '@/features/lang/hooks/useLang';
 import Link from 'next/link';
-import React, { useEffect, useState } from 'react'
 import { Button, Spinner, Table } from 'react-bootstrap';
 
 export default function LangList() {
-    const [langs, setLangs] = useState<Lang[]>([]);
-    const [loading, setLoading] = useState(true);
-
-    useEffect(() => {
-        langService.getAll()
-            .then(setLangs)
-            .finally(() => setLoading(false));
-    }, [])
-
-    if (loading) {
+    const { data: langs = [], isLoading, error } = useLangs();
+    if (isLoading) {
         return <Spinner animation="border" />
     }
-
+    if (error) {
+        return <p>Veriler yüklenirken bir hata oluştu.</p>;
+    }
     return (
         <>
             <div className="d-flex justify-content-between align-items-center mb-3">

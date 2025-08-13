@@ -1,22 +1,16 @@
 'use client'
 
-import { datasheetService } from "@/features/datasheet/api/datasheetService"
-import { Datasheet } from "@/features/datasheet/types/datasheet"
+import { useDatasheets } from "@/features/datasheet/hooks/useDatasheet";
 import Link from "next/link"
-import { useEffect, useState } from "react"
 import { Button, Spinner, Table } from "react-bootstrap"
 
 export default function DatasheetList() {
-    const [datasheets, setDatasheets] = useState<Datasheet[]>([])
-    const [loading, setLoading] = useState(true)
-
-    useEffect(() => {
-        datasheetService.getAll()
-            .then(setDatasheets)
-            .finally(() => setLoading(false))
-    }, [])
-    if (loading) {
+    const { data: datasheets = [], isLoading, error } = useDatasheets();
+    if (isLoading) {
         return <Spinner animation="border" />
+    }
+    if (error) {
+        return <p>Veriler yüklenirken bir hata oluştu.</p>;
     }
     return (
 

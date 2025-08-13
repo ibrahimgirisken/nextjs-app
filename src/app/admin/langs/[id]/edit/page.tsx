@@ -1,21 +1,19 @@
 'use client'
 import LangForm from '@/features/lang/components/LangForm'
-import { langService } from '@/features/lang/hooks/langService'
-import { Lang } from '@/features/lang/types/lang'
+import { useLangById } from '@/features/lang/hooks/useLang'
 import { useParams, useRouter } from 'next/navigation'
-import { useEffect, useState } from "react"
 
 export default function BrandEdit() {
     const router = useRouter()
     const { id } = useParams()
-    const [lang, setLang] = useState<Lang | null>(null)
+    const { data: lang, isLoading, error } = useLangById(id as string)
+    if (isLoading) {
+        return <p>Yükleniyor...</p>;
+    }
 
-    useEffect(() => {
-        if (id) {
-            langService.getById(id as string).then(setLang)
-        }
-    }, [id])
-
+    if (error) {
+        return <p>Bir hata oluştu.</p>;
+    }
     return (
         <>
             <h2>Dil Düzenleme</h2>

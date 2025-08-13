@@ -1,20 +1,19 @@
 'use client'
-import { bannerService } from '@/features/banner/api/bannerService'
 import BannerForm from '@/features/banner/components/BannerForm'
-import { Banner } from '@/features/banner/types/banner'
+import { useBannerById } from '@/features/banner/hooks/useBanner'
 import { useParams, useRouter } from 'next/navigation'
-import { useEffect, useState } from "react"
 
 export default function BannerEdit() {
     const router = useRouter()
     const { id } = useParams()
-    const [banner, setBanner] = useState<Banner | null>(null)
+    const { data: banner, isLoading, error } = useBannerById(id as string);
+    if (isLoading) {
+        return <p>Yükleniyor...</p>;
+    }
 
-    useEffect(() => {
-        if (id) {
-            bannerService.getById(id as string).then(setBanner)
-        }
-    }, [id])
+    if (error) {
+        return <p>Bir hata oluştu.</p>;
+    }
     return (
         <>
             <h2>Banner Düzenleme</h2>

@@ -1,24 +1,19 @@
 'use client'
 import { brandService } from '@/features/brand/api/brandService';
-import { Brand } from '@/features/brand/types/brand';
+import { useBrands } from '@/features/brand/hooks/useBrand';
 import Link from 'next/link';
 import React, { useEffect, useState } from 'react'
 import { Button, Spinner, Table } from 'react-bootstrap';
 
 export default function BrandList() {
-    const [brands, setBrands] = useState<Brand[]>([]);
-    const [loading, setLoading] = useState(true);
+    const { data: brands = [], isLoading, error } = useBrands();
 
-    useEffect(() => {
-        brandService.getAll()
-            .then(setBrands)
-            .finally(() => setLoading(false));
-    }, [])
-
-    if (loading) {
+    if (isLoading) {
         return <Spinner animation="border" />
     }
-
+    if (error) {
+        return <p>Veriler yüklenirken bir hata oluştu.</p>;
+    }
     return (
         <>
             <div className="d-flex justify-content-between align-items-center mb-3">

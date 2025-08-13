@@ -1,8 +1,8 @@
 import { useEffect, useState } from 'react'
 import { Button, Col, Form, Row } from 'react-bootstrap'
 import { Lang } from '../types/lang'
-import { settingService } from '@/features/setting/api/settingService'
 import ImageUpload from '@/shared/imageUpload'
+import { useCreateLang, useUpdateLang } from '../hooks/useLang'
 
 type LangFormProps = {
     initialData?: Lang,
@@ -18,6 +18,8 @@ export default function LangForm({ initialData, onSuccess }: LangFormProps) {
         Image: ''
     })
 
+    const { mutateAsync: createLang, isPending: creating } = useCreateLang();
+    const { mutateAsync: updateLang, isPending: updating } = useUpdateLang();
     useEffect(() => {
         if (initialData) {
             setFormData(initialData)
@@ -35,7 +37,12 @@ export default function LangForm({ initialData, onSuccess }: LangFormProps) {
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault()
         try {
-            await settingService.update(formData)
+            if (formData.id) {
+                await updateLang({ data: formData })
+            } else {
+                const { id, ...payload } = formData
+                await createLang(payload)
+            }
             if (onSuccess) onSuccess()
         } catch (error) {
             console.log(error)

@@ -4,7 +4,7 @@ import { reviseTheText } from '@/lib/reviseTheText'
 import { Button, Col, Form, Row, Tab, Tabs } from 'react-bootstrap'
 import ImageUpload from '@/shared/imageUpload'
 import { Datasheet } from '../types/datasheet'
-import { datasheetService } from '../api/datasheetService'
+import { useCreateDatasheet, useUpdateDatasheet } from '../hooks/useDatasheet'
 
 type DatasheetFormProps = {
     initialData?: Datasheet,
@@ -44,6 +44,9 @@ export default function DatasheetForm({ initialData, onSuccess }: DatasheetFormP
         ]
     })
 
+    const { mutateAsync: createDatasheet, isPending: creating } = useCreateDatasheet();
+    const { mutateAsync: updateDatasheet, isPending: updating } = useUpdateDatasheet();
+
     useEffect(() => {
         if (initialData) {
             setFormData(initialData)
@@ -80,10 +83,10 @@ export default function DatasheetForm({ initialData, onSuccess }: DatasheetFormP
         e.preventDefault()
         try {
             if (formData.id) {
-                await datasheetService.update(formData)
+                await updateDatasheet({ data: formData })
             } else {
                 const { id, ...dataToSend } = formData
-                await datasheetService.create(dataToSend)
+                await createDatasheet(dataToSend)
             }
             if (onSuccess) onSuccess()
         } catch (error) {

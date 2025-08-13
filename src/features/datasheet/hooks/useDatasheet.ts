@@ -6,4 +6,5 @@ export const {
   useByLang: useDatasheetsByLang,
   useCreate: useCreateDatasheet,
   useUpdate: useUpdateDatasheet,
+  useById: useDatasheetById,
 } = createQueryHooks('datasheets', datasheetService);

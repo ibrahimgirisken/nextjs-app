@@ -1,26 +1,18 @@
 'use client'
-import { categoryService } from '@/features/category/api/categoryService'
-import { Category } from '@/features/category/types/category'
+import { useCategories } from '@/features/category/hooks/useCategory'
 import Link from 'next/link'
-import React, { useEffect, useState } from 'react'
 import { Button, Spinner, Table } from 'react-bootstrap'
 
 export default function CategoryList() {
 
-    const [categories, setCategories] = useState<Category[]>([])
-    const [loading, setLoading] = useState(true)
+    const { data: categories = [], isLoading, error } = useCategories();
 
-    useEffect(() => {
-        categoryService.getAll()
-            .then(setCategories)
-            .finally(() => setLoading(false))
-    }, [])
-
-    if (loading) {
+    if (isLoading) {
         return <Spinner animation="border" />
     }
-
-
+    if (error) {
+        return <p>Veriler yüklenirken bir hata oluştu.</p>;
+    }
     return (
         <>
             <div className="d-flex justify-content-between align-items-center mb-3">

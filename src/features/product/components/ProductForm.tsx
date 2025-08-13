@@ -1,12 +1,13 @@
 'use client'
-import { useEffect, useState } from 'react'
+
+import React, { useEffect, useState } from 'react';
 import { Product } from '../types/product'
 import { reviseTheText } from '@/lib/reviseTheText'
 import { Form, Button, Row, Col, Tabs, Tab } from 'react-bootstrap'
 import { Category } from '@/features/category/types/category'
 import { Brand } from '@/features/brand/types/brand'
 import ImageUpload from '@/shared/imageUpload'
-import { productService } from '../api/productService'
+import { useCreateProduct, useUpdateProduct } from '../hooks/useProducts'
 
 type ProductFormProps = {
   initialData?: Product,
@@ -64,6 +65,10 @@ export default function ProductForm({ initialData, categoryList, brandList, onSu
     ]
   })
 
+
+  const { mutateAsync: createProduct, isPending: creating } = useCreateProduct();
+  const { mutateAsync: updateProduct, isPending: updating } = useUpdateProduct();
+
   useEffect(() => {
     if (initialData) {
       setFormData(initialData)
@@ -100,10 +105,10 @@ export default function ProductForm({ initialData, categoryList, brandList, onSu
     e.preventDefault();
     try {
       if (formData.id) {
-        await productService.update(formData);
+        await updateProduct({ data: formData });
       } else {
-        const { id, ...dataToSend } = formData;
-        await productService.create(dataToSend);
+        const { id, ...payload } = formData;
+        await createProduct(payload);
       }
       if (onSuccess) onSuccess();
     } catch (error) {

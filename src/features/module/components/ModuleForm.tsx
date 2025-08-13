@@ -4,6 +4,7 @@ import { Module } from '../types/module'
 import { moduleService } from '../api/moduleService';
 import { Button, Col, Form, Row, Tab, Tabs } from 'react-bootstrap';
 import ImageUpload from '@/shared/imageUpload';
+import { useCreateModule, useUpdateModule } from '../hooks/useModules';
 
 type ModuleFormProps = {
     initialData?: Module,
@@ -36,6 +37,9 @@ export default function ModuleForm({ initialData, onSuccess }: ModuleFormProps) 
             moduleData: ''
         }]
     });
+
+    const { mutateAsync: createModule, isPending: creating } = useCreateModule();
+    const { mutateAsync: updateModule, isPending: update } = useUpdateModule();
     useEffect(() => {
         if (initialData) {
             setFormData(initialData)
@@ -70,10 +74,10 @@ export default function ModuleForm({ initialData, onSuccess }: ModuleFormProps) 
         e.preventDefault()
         try {
             if (formData.id) {
-                await moduleService.update(formData)
+                await updateModule({ data: formData })
             } else {
                 const { id, ...dataToSend } = formData
-                await moduleService.create(dataToSend)
+                await createModule(dataToSend)
             }
             if (onSuccess) onSuccess()
         } catch (error) {

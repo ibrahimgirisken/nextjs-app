@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { Brand } from '../types/brand'
-import { brandService } from '../api/brandService';
 import { Button, Form } from 'react-bootstrap'
+import { useCreateBrand, useUpdateBrand } from '../hooks/useBrand';
 
 type BrandFormProps = {
     initialData?: Brand,
@@ -15,6 +15,10 @@ export default function BrandForm({ initialData, onSuccess }: BrandFormProps) {
         order: 1,
         status: true
     });
+
+    const { mutateAsync: createBrand, isPending: creating } = useCreateBrand();
+    const { mutateAsync: updateBrand, isPending: updating } = useUpdateBrand();
+
 
     useEffect(() => {
         if (initialData) {
@@ -34,9 +38,10 @@ export default function BrandForm({ initialData, onSuccess }: BrandFormProps) {
         e.preventDefault();
         try {
             if (formData.id) {
-                await brandService.update(formData)
+                await updateBrand({ data: formData })
             } else {
-                await brandService.create(formData);
+                const { id, ...payload } = formData;
+                await createBrand(payload);
             }
             if (onSuccess) onSuccess()
         } catch (error) {

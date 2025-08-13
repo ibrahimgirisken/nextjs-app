@@ -1,29 +1,17 @@
 'use client';
 
-import { useEffect, useState } from 'react';
 import { Container } from 'react-bootstrap';
-import { Product } from '@/features/product/types/product';
-import { productService } from '../api/productService';
+import { useProductsBySlugAndLang } from '../hooks/useProducts';
 
 export default function ProductDetailPage({ slug, locale }: { slug: string; locale: string }) {
+  const { data: product, isLoading, error } = useProductsBySlugAndLang(slug, locale);
 
-  const [product, setProduct] = useState<Product | null>(null);
-  const [loading, setLoading] = useState(true);
-
-  useEffect(() => {
-    if (!slug || !locale) return;
-    const token = typeof window !== "undefined" ? localStorage.getItem("accessToken") || "" : "";
-    productService.getByUrlAndLang(slug, locale)
-      .then(setProduct)
-      .catch((err) => {
-        console.error('Ürün getirilemedi:', err);
-        setProduct(null);
-      })
-      .finally(() => setLoading(false));
-  }, [slug, locale]);
+  if (isLoading) return <div>Yükleniyor...</div>;
+  if (error) return <div>Ürün bulunamadı.</div>;
 
 
-  if (loading) return <div>Yükleniyor...</div>;
+
+  if (isLoading) return <div>Yükleniyor...</div>;
   if (!product) return <div>Ürün bulunamadı.</div>;
 
   const translation = product.productTranslations.find(t => t.langCode.startsWith(locale));

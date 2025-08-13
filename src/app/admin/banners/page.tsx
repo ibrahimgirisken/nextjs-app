@@ -1,24 +1,17 @@
 'use client'
-import { bannerService } from '@/features/banner/api/bannerService';
-import { Banner } from '@/features/banner/types/banner';
+import { useBanner } from '@/features/banner/hooks/useBanner';
 import Link from 'next/link';
-import React, { useEffect, useState } from 'react'
 import { Button, Spinner, Table } from 'react-bootstrap';
 
 export default function BannerList() {
-  const [banners, setBanners] = useState<Banner[]>([]);
-  const [loading, setLoading] = useState(true);
+  const { data: banners = [], isLoading, error } = useBanner();
 
-  useEffect(() => {
-    bannerService.getAll()
-      .then(setBanners)
-      .finally(() => setLoading(false));
-  }, [])
-
-  if (loading) {
+  if (isLoading) {
     return <Spinner animation="border" />
   }
-
+  if (error) {
+    return <p>Veriler yüklenirken bir hata oluştu.</p>;
+  }
   return (
     <>
       <div className="d-flex justify-content-between align-items-center mb-3">

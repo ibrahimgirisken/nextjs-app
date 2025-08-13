@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react'
 import { Banner } from '../types/banner'
 import { reviseTheText } from '@/lib/reviseTheText';
-import { bannerService } from '../api/bannerService';
 import { Button, Col, Form, Row, Tab, Tabs } from 'react-bootstrap';
 import ImageUpload from '@/shared/imageUpload';
+import { useCreateBanner, useUpdateBanner } from '../hooks/useBanner';
 
 type BannerFormProps = {
     initialData?: Banner,
@@ -40,6 +40,10 @@ export default function BannerForm({ initialData, onSuccess }: BannerFormProps) 
         }]
     });
 
+
+    const { mutateAsync: createBanner, isPending: creating } = useCreateBanner();
+    const { mutateAsync: updateBanner, isPending: updating } = useUpdateBanner();
+
     useEffect(() => {
         if (initialData)
             setFormData(initialData)
@@ -75,10 +79,10 @@ export default function BannerForm({ initialData, onSuccess }: BannerFormProps) 
         e.preventDefault()
         try {
             if (formData.id) {
-                await bannerService.update(formData)
+                await updateBanner({ data: formData });
             } else {
                 const { id, ...dataToSend } = formData
-                await bannerService.create(dataToSend)
+                await createBanner(dataToSend)
             }
             if (onSuccess) onSuccess()
         } catch (error) {

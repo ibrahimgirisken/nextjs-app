@@ -1,20 +1,19 @@
 'use client'
-import { categoryService } from '@/features/category/api/categoryService'
 import CategoryForm from '@/features/category/components/CategoryForm'
-import { Category } from '@/features/category/types/category'
+import { useCategoryById } from '@/features/category/hooks/useCategory'
 import { useParams, useRouter } from 'next/navigation'
-import { useEffect, useState } from "react"
 
 export default function CategoryEdit() {
     const router = useRouter()
     const { id } = useParams()
-    const [category, setCategory] = useState<Category | null>(null)
+    const { data: category, isLoading, error } = useCategoryById(id as string);
+    if (isLoading) {
+        return <p>Yükleniyor...</p>;
+    }
 
-    useEffect(() => {
-        if (id) {
-            categoryService.getById(id as string).then(setCategory)
-        }
-    }, [id])
+    if (error) {
+        return <p>Bir hata oluştu.</p>;
+    }
     return (
         <>
             <h2>Kategori Düzenleme</h2>

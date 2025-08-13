@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 import { Button, Col, Form, Row, Tab, Tabs } from 'react-bootstrap'
 import { Category } from '../types/category'
-import { categoryService } from '../api/categoryService'
+import { useCreateCategory, useUpdateCategory } from '../hooks/useCategory'
 
 type CategoryFormProps = {
     initialData?: Category,
@@ -45,6 +45,9 @@ export default function CategoryForm({ initialData, onSuccess }: CategoryFormPro
         ]
     })
 
+    const { mutateAsync: createCategory, isPending: creating } = useCreateCategory();
+    const { mutateAsync: updateCategory, isPending: updating } = useUpdateCategory();
+
     useEffect(() => {
         if (initialData) {
             setFormData(initialData)
@@ -76,13 +79,10 @@ export default function CategoryForm({ initialData, onSuccess }: CategoryFormPro
         e.preventDefault()
         try {
             if (formData.id) {
-                await categoryService.update(formData)
+                await updateCategory({ data: formData })
             } else {
                 const { id, ...dataToSend } = formData
-                if (!dataToSend.parentId) {
-                    delete dataToSend.parentId
-                }
-                await categoryService.create(dataToSend)
+                await createCategory(dataToSend)
             }
             if (onSuccess) onSuccess()
         } catch (error) {

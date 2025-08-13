@@ -1,21 +1,19 @@
 'use client'
-import { moduleService } from '@/features/module/api/moduleService';
 import ModuleForm from '@/features/module/components/ModuleForm';
-import { Module } from '@/features/module/types/module';
+import { useModulesById } from '@/features/module/hooks/useModules';
 import { useParams, useRouter } from 'next/navigation';
-import React, { useEffect, useState } from 'react'
+import { Spinner } from 'react-bootstrap';
 
 export default function ModuleEdit() {
-    const router = useRouter();
+    const router = useRouter()
     const { id } = useParams();
-    const [module, setModule] = useState<Module | null>(null);
-
-    useEffect(() => {
-        if (id) {
-            moduleService.getById(id as string).then(setModule)
-        }
-    }, [id])
-
+    const { data: module, isLoading, error } = useModulesById(id as string);
+    if (isLoading) {
+        return <Spinner animation="border" />
+    }
+    if (error) {
+        return <p>Veriler yüklenirken bir hata oluştu.</p>;
+    }
     return (
         <>
             <h2>Modul Düzenleme</h2>

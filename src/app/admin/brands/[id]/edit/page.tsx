@@ -1,21 +1,19 @@
 'use client'
-import { brandService } from '@/features/brand/api/brandService'
 import BrandForm from '@/features/brand/components/BrandForm'
-import { Brand } from '@/features/brand/types/brand'
+import { useBrandById } from '@/features/brand/hooks/useBrand'
 import { useParams, useRouter } from 'next/navigation'
-import { useEffect, useState } from "react"
 
 export default function BrandEdit() {
     const router = useRouter()
     const { id } = useParams()
-    const [brand, setBrands] = useState<Brand | null>(null)
+    const { data: brand, isLoading, error } = useBrandById(id as string);
+    if (isLoading) {
+        return <p>Yükleniyor...</p>;
+    }
 
-    useEffect(() => {
-        if (id) {
-            brandService.getById(id as string).then(setBrands)
-        }
-    }, [id])
-
+    if (error) {
+        return <p>Bir hata oluştu.</p>;
+    }
     return (
         <>
             <h2>Marka Düzenleme</h2>

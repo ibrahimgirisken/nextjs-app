@@ -4,7 +4,7 @@ import { useEffect, useState } from "react"
 import { Setting } from "../types/setting"
 import { Button, Col, Form, Row, Tab, Tabs } from "react-bootstrap"
 import ImageUpload from "@/shared/imageUpload"
-import { settingService } from "../api/settingService"
+import { useCreateSetting, useUpdateSetting } from "../hooks/useSetting"
 
 type SettingFromProps = {
     initialData?: Setting,
@@ -50,6 +50,10 @@ export default function SettingForm({ initialData, onSuccess }: SettingFromProps
         ]
     })
 
+
+    const { mutateAsync: createSetting, isPending: creating } = useCreateSetting();
+    const { mutateAsync: updateSetting, isPending: updating } = useUpdateSetting();
+
     useEffect(() => {
         if (initialData) {
             setFormData(initialData)
@@ -83,10 +87,10 @@ export default function SettingForm({ initialData, onSuccess }: SettingFromProps
         e.preventDefault()
         try {
             if (formData.id) {
-                await settingService.update(formData)
+                await updateSetting({ data: formData })
             } else {
                 const { id, ...dataToSend } = formData
-                await settingService.create(dataToSend)
+                await createSetting(dataToSend)
             }
             if (onSuccess) onSuccess()
         } catch (error) {

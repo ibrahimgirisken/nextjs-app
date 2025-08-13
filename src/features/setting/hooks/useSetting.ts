@@ -5,4 +5,5 @@ export const {
   useAll: useSettings,
   useByLang: useSettingByLang,
   useUpdate: useUpdateSetting,
+  useCreate: useCreateSetting,
 } = createQueryHooks('setting', settingService);

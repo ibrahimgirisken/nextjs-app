@@ -1,22 +1,20 @@
 'use client'
 
-import { homeService } from "@/features/home/api/homeService"
+import { useHomes } from "@/features/home/hooks/useHomes"
 import { Home } from "@/features/home/types/home"
 import Link from "next/link"
 import { useEffect, useState } from "react"
 import { Button, Spinner, Table } from "react-bootstrap"
 
 export default function HomeList() {
-    const [homes, setHomes] = useState<Home[]>([])
-    const [loading, setLoading] = useState(true)
+    const { data: homes = [], isLoading, error } = useHomes();
 
-    useEffect(() => {
-        homeService.getAll()
-            .then(setHomes)
-            .finally(() => setLoading(false))
-    }, [])
-    if (loading) {
+
+    if (isLoading) {
         return <Spinner animation="border" />
+    }
+    if (error) {
+        return <p>Veriler yüklenirken bir hata oluştu.</p>;
     }
     return (
 
@@ -40,17 +38,17 @@ export default function HomeList() {
                         </tr>
                     </thead>
                     <tbody>
-                        {homes.map((home, index) => {
-                            const trLang = home.homeTranslations.find(t => t.langCode === 'tr')
+                        {homes.map((data, index) => {
+                            const trLang = data.homeTranslations.find(t => t.langCode === 'tr')
                             return (
-                                <tr key={home.id}>
+                                <tr key={data.id}>
                                     <td>{index + 1}</td>
                                     <td>{trLang?.title}</td>
                                     <td>{trLang?.url}</td>
-                                    <td>{home.order}</td>
-                                    <td>{home.status ? 'Aktif' : 'Pasif'}</td>
+                                    <td>{data.order}</td>
+                                    <td>{data.status ? 'Aktif' : 'Pasif'}</td>
                                     <td>
-                                        <Link href={`/admin/homes/${home.id}/edit`}>
+                                        <Link href={`/admin/homes/${data.id}/edit`}>
                                             <Button variant="warning" size="sm" className="me-2">
                                                 Düzenle
                                             </Button>

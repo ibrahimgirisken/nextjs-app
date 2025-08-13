@@ -1,4 +1,5 @@
 export interface ApplicationService {
+  id: string;
   name: string;
   actions: Action[];
 }

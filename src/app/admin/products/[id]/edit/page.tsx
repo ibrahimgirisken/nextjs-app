@@ -31,9 +31,6 @@ export default function ProductEdit() {
             productService.getById(id as string).then(setProduct);
         }
     }, [id])
-
-
-
     return (
         <>
             <h2>Ürün Düzenleme</h2>

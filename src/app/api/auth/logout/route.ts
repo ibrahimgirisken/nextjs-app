@@ -6,9 +6,9 @@ export async function POST() {
   res.cookies.set('accessToken', '', {
     httpOnly: true,
     secure: process.env.NODE_ENV === 'production',
-    sameSite: 'lax', // login ile aynı
-    path: '/', // login ile aynı
-    maxAge: 0, // hemen sil
+    sameSite: 'lax',
+    path: '/',
+    maxAge: 0,
   });
 
   return res;

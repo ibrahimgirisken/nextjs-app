@@ -1,7 +1,9 @@
-import api from '@/lib/axiosClient';
+import { createApiService } from '@/lib/createApiService';
+import { createServerApi } from '@/lib/serverApi';
 import { ApplicationService } from '../types/ApplicationService';
 
-export async function fetchAllPermissions(): Promise<ApplicationService[]> {
-  const response = await api.get<ApplicationService[]>('/ApplicationServices');
-  return response.data;
-}
+const apiInstance = createServerApi();
+export const applicationService = createApiService<ApplicationService>(
+  apiInstance,
+  'ApplicationServices'
+);

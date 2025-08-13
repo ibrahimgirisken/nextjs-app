@@ -22,7 +22,7 @@ export default function SettingEdit() {
                 <SettingForm initialData={setting}
                     onSuccess={() => {
                         console.log("Ayarlar Güncellendi"),
-                            router.push('/admin/settings/AAAAAAAA-AAAA-AAAA-AAAA-AAAAAAAAAAAA/edit')
+                            router.push('/admin')
                     }}
                 />
             )}

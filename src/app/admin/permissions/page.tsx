@@ -1,5 +1,5 @@
 'use client'
-import { fetchAllPermissions } from '@/features/auth/api/permissionsService';
+import { applicationService } from '@/features/auth/api/permissionsService';
 import { ApplicationService } from '@/features/auth/types/ApplicationService';
 import React, { useEffect, useState } from 'react'
 
@@ -8,7 +8,7 @@ export default function PermissionsPage() {
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
-        fetchAllPermissions()
+        applicationService.getAllSingle()
             .then(setPermissions)
             .finally(() => setLoading(false))
     }, []);

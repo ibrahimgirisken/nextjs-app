@@ -1,22 +1,30 @@
 import { AxiosInstance } from 'axios';
 
-type EntityWithId = { id: string };
-type UpdateDto<T extends EntityWithId> = Partial<Omit<T, 'id'>> & { id: string };
+// Artık id zorunlu değil, opsiyonel
+type EntityWithOptionalId<ID = string> = { id?: ID };
 
-export function createApiService<T extends EntityWithId>(api: AxiosInstance, basePath: string) {
+type CreateDto<T extends EntityWithOptionalId> = Omit<T, 'id'>;
+type UpdateDto<T extends EntityWithOptionalId> = Partial<Omit<T, 'id'>> & { id?: string };
+
+export function createApiService<T extends EntityWithOptionalId>(
+  api: AxiosInstance,
+  basePath: string
+) {
   return {
+    getAllSingle: (): Promise<T[]> => api.get(`/${basePath}`).then((res) => res.data),
     getAll: (): Promise<T[]> =>
       api.get(`/${basePath}/all?IncludeAllLanguages=true`).then((res) => res.data),
 
     getAllByLang: (lang: string): Promise<T[]> =>
       api.get(`/${basePath}/all?Language=${lang}`).then((res) => res.data),
+
     getById: (id: string): Promise<T> =>
       api.get(`/${basePath}/by-id?id=${id}&IncludeAllLanguages=true`).then((res) => res.data),
 
     getByUrlAndLang: (slug: string, lang: string): Promise<T> =>
       api.get(`/${basePath}/by-url?Url=${slug}&Language=${lang}`).then((res) => res.data),
 
-    create: (data: Omit<T, 'id'>): Promise<T> =>
+    create: (data: CreateDto<T>): Promise<T> =>
       api.post(`/${basePath}/add`, data).then((res) => res.data),
 
     update: (data: UpdateDto<T>): Promise<T> =>

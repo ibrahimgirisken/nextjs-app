@@ -25,9 +25,9 @@ export async function POST(req: NextRequest) {
     res.cookies.set('accessToken', data.token.accessToken, {
       httpOnly: true,
       secure: process.env.NODE_ENV === 'production',
-      sameSite: 'lax', // strict yerine lax: redirect sonrası cookie gelsin
+      sameSite: 'lax',
       path: '/',
-      maxAge: 60 * 60, // 1 saat
+      maxAge: 60 * 60,
     });
 
     return res;

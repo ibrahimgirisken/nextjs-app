@@ -1,9 +1,7 @@
 'use client'
 
 import { useHomes } from "@/features/home/hooks/useHomes"
-import { Home } from "@/features/home/types/home"
 import Link from "next/link"
-import { useEffect, useState } from "react"
 import { Button, Spinner, Table } from "react-bootstrap"
 
 export default function HomeList() {

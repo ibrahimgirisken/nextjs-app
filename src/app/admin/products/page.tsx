@@ -1,22 +1,17 @@
 'use client'
 
-import { productService } from "@/features/product/api/productService"
-import { Product } from "@/features/product/types/product"
+import { useProducts } from "@/features/product/hooks/useProducts"
 import Link from "next/link"
-import { useEffect, useState } from "react"
 import { Button, Spinner, Table } from "react-bootstrap"
 
 export default function ProductList() {
-    const [products, setProducts] = useState<Product[]>([])
-    const [loading, setLoading] = useState(true)
+    const { data: products = [], isLoading, error } = useProducts();
 
-    useEffect(() => {
-        productService.getAll()
-            .then(setProducts)
-            .finally(() => setLoading(false))
-    }, [])
-    if (loading) {
+    if (isLoading) {
         return <Spinner animation="border" />
+    }
+    if (error) {
+        return <p>Veriler yüklenirken bir hata oluştu.</p>;
     }
     return (
         <>

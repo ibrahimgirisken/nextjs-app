@@ -1,19 +1,11 @@
 'use client'
-import { moduleService } from '@/features/module/api/moduleService'
-import { Module } from '@/features/module/types/module'
+import { useModules } from '@/features/module/hooks/useModules'
 import PageForm from '@/features/page/components/PageForm'
 import { useRouter } from 'next/navigation'
-import React, { useEffect, useState } from 'react'
 
 export default function PageAdd() {
     const router = useRouter()
-    const [modules, setModules] = useState<Module[]>([])
-
-    useEffect(() => {
-        moduleService.getAll()
-            .then(setModules)
-    }, [])
-
+    const { data: modules = [] } = useModules();
     return (
         <>
             <h2>Sayfa Ekleme</h2>

@@ -1,18 +1,16 @@
 'use client'
-import { applicationService } from '@/features/auth/api/permissionsService';
-import { ApplicationService } from '@/features/auth/types/ApplicationService';
-import React, { useEffect, useState } from 'react'
+import { usePermissionsSingle } from "@/features/auth/hooks/usePermissions";
+import { Spinner } from "react-bootstrap";
 
 export default function PermissionsPage() {
-    const [permissions, setPermissions] = useState<ApplicationService[]>([]);
-    const [loading, setLoading] = useState(true);
+    const { data: permissions = [], isLoading, error } = usePermissionsSingle();
 
-    useEffect(() => {
-        applicationService.getAllSingle()
-            .then(setPermissions)
-            .finally(() => setLoading(false))
-    }, []);
-    if (loading) return <p>Yükleniyor...</p>;
+    if (isLoading) {
+        return <Spinner animation="border" />
+    }
+    if (error) {
+        return <p>Veriler yüklenirken bir hata oluştu.</p>;
+    }
     return (
         <>
             <h2>Yetkiler</h2>

@@ -1,23 +1,19 @@
 'use client'
 
-import { pageService } from "@/features/page/api/pageService"
-import { Page } from "@/features/page/types/page"
+import { usePages } from "@/features/page/hooks/usePages"
 import Link from "next/link"
-import { useEffect, useState } from "react"
 import { Button, Spinner, Table } from "react-bootstrap"
 
 export default function PageList() {
-    const [pages, setPages] = useState<Page[]>([])
-    const [loading, setLoading] = useState(true)
+    const { data: pages = [], isLoading, error } = usePages();
 
-    useEffect(() => {
-        pageService.getAll()
-            .then(setPages)
-            .finally(() => setLoading(false))
-    }, [])
-    if (loading) {
+    if (isLoading) {
         return <Spinner animation="border" />
     }
+    if (error) {
+        return <p>Veriler yüklenirken bir hata oluştu.</p>;
+    }
+
     return (
 
         <div>

@@ -1,31 +1,17 @@
 'use client'
-import { moduleService } from "@/features/module/api/moduleService"
-import { Module } from "@/features/module/types/module"
-import { pageService } from "@/features/page/api/pageService"
+import { useModules } from "@/features/module/hooks/useModules"
 import PageForm from "@/features/page/components/PageForm"
-import { Page } from "@/features/page/types/page"
+import { usePageById } from "@/features/page/hooks/usePages"
 import { useParams, useRouter } from "next/navigation"
-import { useEffect, useState } from "react"
 
 export default function PageEdit() {
     const router = useRouter()
     const { id } = useParams()
-    const [page, setPage] = useState<Page | null>(null)
-    const [modules, setModules] = useState<Module[]>([])
 
-
-    useEffect(() => {
-        moduleService.getAll()
-            .then(setModules)
-    }, [])
-
-    useEffect(() => {
-        if (id) {
-            pageService.getById(id as string).then(setPage)
-        }
-    }, [id])
-
-
+    const { data: page, isLoading, error } = usePageById(id as string);
+    const { data: modules = [] } = useModules();
+    if (isLoading) return <div>Yükleniyor...</div>;
+    if (error) return <div>Bir hata oluştu.</div>;
 
     return (
         <>

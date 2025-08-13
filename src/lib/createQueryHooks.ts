@@ -6,6 +6,12 @@ export function createQueryHooks<T extends { id: string }>(
   service: ReturnType<typeof createApiService<T>>
 ) {
   return {
+    useAllSingle: () =>
+      useQuery<T[]>({
+        queryKey: [key],
+        queryFn: () => service.getAllSingle(),
+      }),
+
     useAll: () =>
       useQuery<T[]>({
         queryKey: [key],

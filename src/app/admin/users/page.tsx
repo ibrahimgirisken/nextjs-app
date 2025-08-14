@@ -5,6 +5,7 @@ import { Button, Spinner, Table } from 'react-bootstrap'
 
 export default function UserList() {
     const { data: userResponse, isLoading, error } = useUserByParams("Page=0&Size=5");
+    const { users = [] } = userResponse;
     if (isLoading) {
         return <Spinner animation="border" />
     }
@@ -32,7 +33,7 @@ export default function UserList() {
                         </tr>
                     </thead>
                     <tbody>
-                        {userResponse.map((user, index) => {
+                        {users.map((user, index) => {
                             return (
                                 <tr key={user.id}>
                                     <td>{index + 1}</td>

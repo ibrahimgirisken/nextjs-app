@@ -4,3 +4,8 @@ export interface User {
   userName: string;
   email: string;
 }
+
+export interface UserResponse {
+  users: User[];
+  totatlUserCount: number;
+}

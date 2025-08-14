@@ -1,20 +1,19 @@
 'use client'
-import { useUsers } from '@/features/user/hooks/useUser'
+import { useUserByParams } from '@/features/user/hooks/useUser';
 import Link from 'next/link'
 import { Button, Spinner, Table } from 'react-bootstrap'
 
 export default function UserList() {
-    const { data: users = [], isLoading, error } = useUsers();
-
+    const { data: userResponse, isLoading, error } = useUserByParams("Page=0&Size=5");
     if (isLoading) {
         return <Spinner animation="border" />
     }
     if (error) {
-        return <div>Hata: {error.message}</div>
+        return <p>Veriler yüklenirken bir hata oluştu.</p>;
     }
     return (
 
-        <div>
+        <>
             <div className="d-flex justify-content-between align-items-center mb-3">
                 <h2>Kullanıcı Listesi</h2>
                 <Link href="/admin/users/new">
@@ -27,17 +26,18 @@ export default function UserList() {
                         <tr>
                             <th>#</th>
                             <th>İsim & Soyisim</th>
+                            <th>Kullanıcı Adı</th>
                             <th>E-Posta Adresi</th>
-                            <th>Mail</th>
                             <th>İşlemler</th>
                         </tr>
                     </thead>
                     <tbody>
-                        {users.map((user, index) => {
+                        {userResponse.map((user, index) => {
                             return (
                                 <tr key={user.id}>
                                     <td>{index + 1}</td>
-                                    <td>{user.nameSurname}</td>
+                                    <td>{user?.nameSurname}</td>
+                                    <td>{user?.userName}</td>
                                     <td>{user?.email}</td>
                                     <td>
                                         <Link href={`/admin/users/${user.id}/edit`}>
@@ -52,6 +52,6 @@ export default function UserList() {
                     </tbody>
                 </Table>
             </div>
-        </div>
+        </>
     )
 }

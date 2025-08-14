@@ -6,4 +6,5 @@ export const {
   useByLang: useSettingByLang,
   useUpdate: useUpdateSetting,
   useCreate: useCreateSetting,
+  useById: useSettingById,
 } = createQueryHooks('setting', settingService);

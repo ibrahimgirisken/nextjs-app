@@ -6,4 +6,5 @@ export const {
   useCreate: useCreateUser,
   useUpdate: useUpdateUser,
   useById: useUserById,
-} = createQueryHooks('user', userService);
+  useParamsData: useUserByParams,
+} = createQueryHooks('Users', userService);

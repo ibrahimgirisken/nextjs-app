@@ -30,6 +30,12 @@ export function createQueryHooks<T extends { id: string }>(
         queryFn: () => service.getById(id),
       }),
 
+    useParamsData: (pUrl: string) =>
+      useQuery<T>({
+        queryKey: [key, pUrl],
+        queryFn: () => service.getByParams(pUrl),
+      }),
+
     useByUrlAndLang: (slug: string, lang: string) =>
       useQuery<T>({
         queryKey: [key, lang],

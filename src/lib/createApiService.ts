@@ -1,6 +1,5 @@
 import { AxiosInstance } from 'axios';
 
-// Artık id zorunlu değil, opsiyonel
 type EntityWithOptionalId<ID = string> = { id?: ID };
 
 type CreateDto<T extends EntityWithOptionalId> = Omit<T, 'id'>;
@@ -12,11 +11,15 @@ export function createApiService<T extends EntityWithOptionalId>(
 ) {
   return {
     getAllSingle: (): Promise<T[]> => api.get(`/${basePath}`).then((res) => res.data),
+
     getAll: (): Promise<T[]> =>
       api.get(`/${basePath}/all?IncludeAllLanguages=true`).then((res) => res.data),
 
     getAllByLang: (lang: string): Promise<T[]> =>
       api.get(`/${basePath}/all?Language=${lang}`).then((res) => res.data),
+
+    getByParams: (pUrl: string): Promise<T> =>
+      api.get(`/${basePath}?${pUrl}`).then((res) => res.data),
 
     getById: (id: string): Promise<T> =>
       api.get(`/${basePath}/by-id?id=${id}&IncludeAllLanguages=true`).then((res) => res.data),

@@ -1,23 +1,18 @@
 'use client'
-import { translateService } from '@/features/translate/api/translateService'
-import { TranslateKey } from '@/features/translate/types/translate'
+import { useTranslations } from '@/features/translate/hooks/useTranslations'
 import Link from "next/link"
-import React, { useEffect, useState } from 'react'
 import { Button, Spinner, Table } from 'react-bootstrap'
 
 export default function TranslationList() {
-    const [translations, setTranslations] = useState<TranslateKey[]>([])
-    const [loading, setLoading] = useState(true)
-
-    useEffect(() => {
-        translateService.getAll()
-            .then(setTranslations)
-            .finally(() => setLoading(false))
-    }, [])
-
-    if (loading) {
-        return <Spinner animation="border" />
+    const { data: translations = [], isLoading, error } = useTranslations();
+    if (isLoading) {
+        return <Spinner animation="border" />;
     }
+
+    if (error) {
+        return <p>Bir hata oluştu.</p>;
+    }
+
     return (
         <div>
             <div className="d-flex justify-content-between align-items-center mb-3">

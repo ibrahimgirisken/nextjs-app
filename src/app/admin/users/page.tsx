@@ -1,22 +1,16 @@
 'use client'
-import { userService } from '@/features/user/api/userService'
-import { User } from '@/features/user/types/user'
+import { useUsers } from '@/features/user/hooks/useUser'
 import Link from 'next/link'
-import React, { useEffect, useState } from 'react'
 import { Button, Spinner, Table } from 'react-bootstrap'
 
 export default function UserList() {
-    const [users, setUsers] = useState<User[]>([])
-    const [loading, setLoading] = useState(true)
+    const { data: users = [], isLoading, error } = useUsers();
 
-    useEffect(() => {
-        userService.getAll()
-            .then(setUsers)
-            .finally(() => setLoading(false))
-    }, [])
-
-    if (loading) {
+    if (isLoading) {
         return <Spinner animation="border" />
+    }
+    if (error) {
+        return <div>Hata: {error.message}</div>
     }
     return (
 

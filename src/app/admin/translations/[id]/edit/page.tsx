@@ -1,22 +1,20 @@
 'use client'
-import { translateService } from '@/features/translate/api/translateService'
 import TranslateForm from '@/features/translate/components/TranslateForm'
-import { TranslateKey } from '@/features/translate/types/translate'
+import { useTranslationById } from '@/features/translate/hooks/useTranslations'
 import { useParams, useRouter } from 'next/navigation'
-import React, { useEffect, useState } from 'react'
 
 export default function TranslationEdit() {
 
     const router = useRouter()
     const { id } = useParams()
-    const [translation, setTranslation] = useState<TranslateKey | null>(null)
+    const { data: translation, isLoading, error } = useTranslationById(id as string)
+    if (isLoading) {
+        return <p>Yükleniyor...</p>;
+    }
 
-    useEffect(() => {
-        if (id) {
-            translateService.getById(id as string).then(setTranslation)
-        }
-    }, [id])
-
+    if (error) {
+        return <p>Bir hata oluştu.</p>;
+    }
     return (
         <>
             <h2>Dil Değer Düzenleme</h2>

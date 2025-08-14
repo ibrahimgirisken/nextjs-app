@@ -1,8 +1,6 @@
 'use client'
-import { brandService } from '@/features/brand/api/brandService';
 import { useBrands } from '@/features/brand/hooks/useBrand';
 import Link from 'next/link';
-import React, { useEffect, useState } from 'react'
 import { Button, Spinner, Table } from 'react-bootstrap';
 
 export default function BrandList() {

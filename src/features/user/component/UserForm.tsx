@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { User } from '../types/user'
 import { userService } from '../api/userService'
 import { Button, Col, Form, Row } from 'react-bootstrap'
+import { useCreateUser, useUpdateUser } from '../hooks/useUser'
 
 type UserFormProps = {
     initialData?: User,
@@ -17,6 +18,9 @@ export default function UserForm({ initialData, onSuccess }: UserFormProps) {
         password: '',
         passwordConfirm: ''
     })
+
+    const { mutateAsync: createUser, isPending: creating } = useCreateUser();
+    const { mutateAsync: updateUser, isPending: updating } = useUpdateUser();
 
     useEffect(() => {
         if (initialData) {
@@ -36,10 +40,10 @@ export default function UserForm({ initialData, onSuccess }: UserFormProps) {
         e.preventDefault()
         try {
             if (formData.id) {
-                await userService.update(formData)
+                await updateUser({ data: formData })
             } else {
                 const { id, ...dataToSend } = formData
-                await userService.create(dataToSend);
+                await createUser(dataToSend);
             }
             if (onSuccess) onSuccess()
         } catch (error) {

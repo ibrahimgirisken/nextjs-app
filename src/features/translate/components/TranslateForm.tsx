@@ -1,8 +1,8 @@
 'use client'
 import React, { useEffect, useState } from 'react'
 import { TranslateKey } from '../types/translate'
-import { translateService } from '../api/translateService'
 import { Button, Col, Form, Row, Tab, Tabs } from 'react-bootstrap'
+import { useCreateTranslation, useUpdateTranslation } from '../hooks/useTranslations'
 
 type TranslateFormProps = {
     initialData?: TranslateKey,
@@ -27,6 +27,9 @@ export default function TranslateForm({ initialData, onSuccess }: TranslateFormP
             value: '',
         }]
     })
+
+    const { mutateAsync: createTranslate, isPending: creating } = useCreateTranslation();
+    const { mutateAsync: updateTranslate, isPending: updating } = useUpdateTranslation();
 
     useEffect(() => {
         if (initialData) {
@@ -62,10 +65,10 @@ export default function TranslateForm({ initialData, onSuccess }: TranslateFormP
         e.preventDefault()
         try {
             if (formData.id) {
-                await translateService.update(formData)
+                await updateTranslate({ data: formData })
             } else {
                 const { id, ...dataToSend } = formData
-                await translateService.create(dataToSend)
+                await createTranslate(dataToSend)
             }
             if (onSuccess) onSuccess()
         } catch (error) {

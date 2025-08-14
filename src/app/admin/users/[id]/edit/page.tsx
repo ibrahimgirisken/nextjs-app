@@ -1,21 +1,20 @@
 'use client'
-import { userService } from '@/features/user/api/userService'
 import UserForm from '@/features/user/component/UserForm'
-import { User } from '@/features/user/types/user'
+import { useUserById } from '@/features/user/hooks/useUser'
 import { useParams } from 'next/navigation'
 import { useRouter } from 'next/router'
-import React, { useEffect, useState } from 'react'
 
 export default function UserEdit() {
     const router = useRouter()
     const { id } = useParams()
-    const [user, setUser] = useState<User | null>(null)
+    const { data: user, isLoading, error } = useUserById(id as string)
 
-    useEffect(() => {
-        if (id) {
-            userService.getById(id as string).then(setUser)
-        }
-    }, [id])
+    if (isLoading) {
+        return <div>Loading...</div>
+    }
+    if (error) {
+        return <div>Hata: {error.message}</div>
+    }
     return (
         <>
             <h2>Kullanıcı Düzenleme</h2>

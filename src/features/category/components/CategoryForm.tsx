@@ -1,4 +1,5 @@
-import { useEffect, useState } from 'react'
+'use client'
+import { useEffect, useState } from 'react';
 import { Button, Col, Form, Row, Tab, Tabs } from 'react-bootstrap'
 import { Category } from '../types/category'
 import { useCreateCategory, useUpdateCategory } from '../hooks/useCategory'
@@ -81,8 +82,8 @@ export default function CategoryForm({ initialData, onSuccess }: CategoryFormPro
             if (formData.id) {
                 await updateCategory({ data: formData })
             } else {
-                const { id, ...dataToSend } = formData
-                await createCategory(dataToSend)
+                const { id, ...payload } = formData
+                await createCategory(payload)
             }
             if (onSuccess) onSuccess()
         } catch (error) {

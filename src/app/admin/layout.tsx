@@ -12,12 +12,8 @@ export default async function AdminLayout({ children }: { children: ReactNode })
   const locale = 'tr';
 
   return (
-    <html lang={locale}>
-      <body>
-        <NextIntlClientProvider locale={locale}>
-          <AdminLayoutClient>{children}</AdminLayoutClient>
-        </NextIntlClientProvider>
-      </body>
-    </html>
+    <NextIntlClientProvider locale={locale}>
+      <AdminLayoutClient>{children}</AdminLayoutClient>
+    </NextIntlClientProvider>
   );
 }

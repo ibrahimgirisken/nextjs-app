@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { User } from '../types/user'
-import { userService } from '../api/userService'
+import { User } from '../types/userResponse'
 import { Button, Col, Form, Row } from 'react-bootstrap'
 import { useCreateUser, useUpdateUser } from '../hooks/useUser'
 
@@ -14,9 +13,7 @@ export default function UserForm({ initialData, onSuccess }: UserFormProps) {
         id: '',
         nameSurname: '',
         userName: '',
-        email: '',
-        password: '',
-        passwordConfirm: ''
+        email: ''
     })
 
     const { mutateAsync: createUser, isPending: creating } = useCreateUser();
@@ -81,26 +78,6 @@ export default function UserForm({ initialData, onSuccess }: UserFormProps) {
                             type="text"
                             name="email"
                             value={formData.email}
-                            onChange={handleChange}
-                            required
-                        />
-                    </Form.Group>
-                    <Form.Group>
-                        <Form.Label>Şifre</Form.Label>
-                        <Form.Control
-                            type="text"
-                            name="password"
-                            value={formData.password}
-                            onChange={handleChange}
-                            required
-                        />
-                    </Form.Group>
-                    <Form.Group>
-                        <Form.Label>Şifre Tekrar</Form.Label>
-                        <Form.Control
-                            type="text"
-                            name="passwordConfirm"
-                            value={formData.passwordConfirm}
                             onChange={handleChange}
                             required
                         />

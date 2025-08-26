@@ -1,12 +1,12 @@
 'use client';
-import { useProductsByLang } from '@/features/product/hooks/useProducts'
+import { useProducts } from '@/features/product/hooks/useProducts'
 import { Row, Col, Card } from 'react-bootstrap';
 import { Product } from '@/features/product/types/product';
 import { useLocale, useTranslations } from 'next-intl';
 
 function UXProductsPage() {
     const locale = useLocale();
-    const { data: products, isLoading, error } = useProductsByLang(locale);
+    const { data: products = [], isLoading, error } = useProducts();
     const t = useTranslations();
 
     if (isLoading) return <div>Loading...</div>;

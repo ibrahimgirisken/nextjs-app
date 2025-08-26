@@ -1,35 +1,21 @@
 'use client';
 
-import { useEffect, useState } from 'react';
 import { Container } from 'react-bootstrap';
 import { useLocale } from 'next-intl';
-import { Product } from '@/features/product/types/product';
 import { useParams } from 'next/navigation';
-import { productService } from '@/features/product/api/productService';
+import { useProductById } from '@/features/product/hooks/useProducts';
 
 export default function ProductDetailPage() {
   const params = useParams();
   const rawUrl = params?.url;
   const url = Array.isArray(rawUrl) ? rawUrl[0] : rawUrl;
   const locale = useLocale();
+  const { data: product, isLoading, error } = useProductById(url as string);
 
-  const [product, setProduct] = useState<Product | null>(null);
-  const [loading, setLoading] = useState(true);
-
-  useEffect(() => {
-    if (!url || !locale) return;
-
-    productService.getByUrlAndLang(url, locale)
-      .then(setProduct)
-      .catch((err) => {
-        console.error('Ürün getirilemedi:', err);
-        setProduct(null);
-      })
-      .finally(() => setLoading(false));
-  }, [url, locale]);
-
-
-  if (loading) return <div>Yükleniyor...</div>;
+  if (isLoading) return <div>Yükleniyor...</div>;
+  if (error) {
+    return <p>Bir hata oluştu.</p>;
+  }
   if (!product) return <div>Ürün bulunamadı.</div>;
 
   const translation = product.productTranslations.find(t => t.langCode.startsWith(locale));
